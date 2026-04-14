@@ -159,18 +159,14 @@ export const TEMPLATES = {
   skyline: { name: 'Skyline Pro', id: 'skyline' },
   ocean: { name: 'Ocean Pro', id: 'ocean' },
   abstract: { name: 'Abstract Pro', id: 'abstract' },
-  xyzon: { name: 'Xyzon Pro', id: 'xyzon' },
 };
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Public View Route */}
-        <Route path="/card/:id" element={<PublicCard />} />
-        
-        {/* Main Editor Route */}
         <Route path="/" element={<Editor />} />
+        <Route path="/card/:id" element={<PublicCard />} />
       </Routes>
     </Router>
   );
@@ -529,118 +525,127 @@ function Editor() {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden gradient-bg relative" style={{ fontFamily: "'Inter', system-ui, sans-serif", color: '#0f172a' }}>
-            <Header 
-              onReset={handleReset} 
-              onDownloadPNG={handleDownloadPNG} 
-              onDownloadPDF={handleDownloadPDF} 
-              onSave={handleSaveToDB}
-              accentColor={designParams.accentColor} 
-              isGenerating={isGenerating} 
-            />
-            
-            <main className="flex-1 flex flex-col overflow-hidden">
-              <div className="flex justify-center shrink-0 border-b border-white/20 bg-white/10 backdrop-blur-md z-20 shadow-sm relative">
-                <div className="flex p-1.5 gap-1">
-                  <button 
-                    onClick={() => setViewMode('single')} 
-                    className={`px-6 py-2 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${viewMode === 'single' ? 'bg-white shadow-md text-slate-800' : 'text-slate-500 hover:bg-white/50'}`}
-                  >
-                    Single Card Maker
-                  </button>
-                  <button 
-                    onClick={() => setViewMode('batch')} 
-                    className={`px-6 py-2 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${viewMode === 'batch' ? 'bg-indigo-500 shadow-md text-white' : 'text-slate-500 hover:bg-white/50'}`}
-                  >
-                    Batch Generate (CSV)
-                  </button>
-                </div>
-              </div>
-
-              <div className={`flex-1 flex flex-col relative overflow-hidden bg-slate-50/50 ${viewMode === 'single' ? 'flex' : 'hidden'}`}>
-                  <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-slate-100 shadow-sm z-30">
-                     <div className="flex bg-slate-100 p-1 rounded-xl w-full">
-                        <button 
-                          onClick={() => setMobileTab('edit')}
-                          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-black uppercase transition-all ${mobileTab === 'edit' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500'}`}
-                        >
-                          <Layers className="w-3.5 h-3.5" />
-                          Edit Design
-                        </button>
-                        <button 
-                          onClick={() => setMobileTab('preview')}
-                          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-black uppercase transition-all ${mobileTab === 'preview' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500'}`}
-                        >
-                          <Smartphone className="w-3.5 h-3.5" />
-                          Preview Card
-                        </button>
-                     </div>
-                  </div>
-
-                  <div className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden relative custom-scrollbar">
-                    <div className={`lg:order-2 flex-1 lg:h-full overflow-y-auto custom-scrollbar ${mobileTab === 'preview' ? 'block' : 'hidden lg:block'}`}>
-                       <div className="px-2 py-4 sm:p-6 lg:p-10">
-                          <LivePreview 
-                            formData={formData} 
-                            logoUrl={logoUrl} 
-                            designParams={designParams} 
-                            onGenerateAR={generateCanvas}
-                          />
-                       </div>
-                    </div>
-
-                    <div className={`lg:order-1 lg:w-[400px] shrink-0 border-t lg:border-t-0 lg:border-r border-slate-200 bg-white lg:bg-transparent ${mobileTab === 'edit' ? 'block' : 'hidden lg:block'}`}>
-                       <Sidebar 
-                formData={formData} 
-                setFormData={setFormData}
-                logoUrl={logoUrl}
-                setLogoUrl={setLogoUrl}
-                onLogoUpload={onLogoUpload}
-                designParams={designParams}
-                applyPreset={applyPreset}
-                updateDesignColor={updateDesignColor}
-                setTemplate={setTemplate}
-                savedCards={savedCards}
-                onDeleteCard={(id) => setSavedCards(prev => prev.filter(c => c._id !== id))}
-                showModal={showModal}
-                closeModal={closeModal}
-                showToast={showToast}
-                isSynced={isSynced}
-                toggleSync={toggleSync}
-                onShare={handleShare}
-              />
-                    </div>
-                  </div>
-                </div>
-
-              <div className={`flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar ${viewMode === 'batch' ? 'block' : 'hidden'}`}>
-                <BatchUploader logoUrl={logoUrl} setLogoUrl={setLogoUrl} designParams={designParams} />
-              </div>
-            </main>
-
-            {isGenerating && (
-              <div className="fixed bottom-6 right-6 bg-slate-900 border border-slate-700 text-white px-5 py-4 rounded-xl shadow-2xl flex items-center gap-3 z-50 animate-bounce">
-                <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                <span className="font-semibold text-sm tracking-wide">Generating High-Quality Print File...</span>
-              </div>
-            )}
-            <AnimatePresence>
-              {toast && (
-                <Toast 
-                  message={toast.message} 
-                  type={toast.type} 
-                  onClose={() => setToast(null)} 
-                />
-              )}
-            </AnimatePresence>
-
-            <Modal 
-              isOpen={modal.isOpen} 
-              onClose={closeModal} 
-              title={modal.title}
-              footer={modal.footer}
+      <Header 
+        onReset={handleReset} 
+        onDownloadPNG={handleDownloadPNG} 
+        onDownloadPDF={handleDownloadPDF} 
+        onSave={handleSaveToDB}
+        accentColor={designParams.accentColor} 
+        isGenerating={isGenerating} 
+      />
+      
+      <main className="flex-1 flex flex-col overflow-hidden">
+        {/* VIEW MODE TOGGLE */}
+        <div className="flex justify-center shrink-0 border-b border-white/20 bg-white/10 backdrop-blur-md z-20 shadow-sm relative">
+          <div className="flex p-1.5 gap-1">
+            <button 
+              onClick={() => setViewMode('single')} 
+              className={`px-6 py-2 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${viewMode === 'single' ? 'bg-white shadow-md text-slate-800' : 'text-slate-500 hover:bg-white/50'}`}
             >
-              {modal.content}
-            </Modal>
+              Single Card Maker
+            </button>
+            <button 
+              onClick={() => setViewMode('batch')} 
+              className={`px-6 py-2 text-xs font-black uppercase tracking-widest rounded-xl transition-all duration-300 ${viewMode === 'batch' ? 'bg-indigo-500 shadow-md text-white' : 'text-slate-500 hover:bg-white/50'}`}
+            >
+              Batch Generate (CSV)
+            </button>
+          </div>
+        </div>
+
+        {/* SINGLE CARD VIEW - always mounted to preserve state */}
+        <div className={`flex-1 flex flex-col relative overflow-hidden bg-slate-50/50 ${viewMode === 'single' ? 'flex' : 'hidden'}`}>
+            {/* MOBILE TAB NAVIGATION (Visible only on mobile) */}
+            <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-slate-100 shadow-sm z-30">
+               <div className="flex bg-slate-100 p-1 rounded-xl w-full">
+                  <button 
+                    onClick={() => setMobileTab('edit')}
+                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-black uppercase transition-all ${mobileTab === 'edit' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500'}`}
+                  >
+                    <Layers className="w-3.5 h-3.5" />
+                    Edit Design
+                  </button>
+                  <button 
+                    onClick={() => setMobileTab('preview')}
+                    className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-black uppercase transition-all ${mobileTab === 'preview' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500'}`}
+                  >
+                    <Smartphone className="w-3.5 h-3.5" />
+                    Preview Card
+                  </button>
+               </div>
+            </div>
+
+            <div className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden relative custom-scrollbar">
+              {/* LIVE PREVIEW CONTAINER */}
+              <div className={`lg:order-2 flex-1 lg:h-full overflow-y-auto custom-scrollbar ${mobileTab === 'preview' ? 'block' : 'hidden lg:block'}`}>
+                 <div className="px-2 py-4 sm:p-6 lg:p-10">
+                    <LivePreview 
+                      formData={formData} 
+                      logoUrl={logoUrl} 
+                      designParams={designParams} 
+                      onGenerateAR={generateCanvas}
+                    />
+                 </div>
+              </div>
+
+              {/* SIDEBAR CONTAINER */}
+              <div className={`lg:order-1 lg:w-[400px] shrink-0 border-t lg:border-t-0 lg:border-r border-slate-200 bg-white lg:bg-transparent ${mobileTab === 'edit' ? 'block' : 'hidden lg:block'}`}>
+                 <Sidebar 
+          formData={formData} 
+          setFormData={setFormData}
+          logoUrl={logoUrl}
+          setLogoUrl={setLogoUrl}
+          onLogoUpload={onLogoUpload}
+          designParams={designParams}
+          applyPreset={applyPreset}
+          updateDesignColor={updateDesignColor}
+          setTemplate={setTemplate}
+          savedCards={savedCards}
+          onDeleteCard={(id) => setSavedCards(prev => prev.filter(c => c._id !== id))}
+          showModal={showModal}
+          closeModal={closeModal}
+          showToast={showToast}
+          isSynced={isSynced}
+          toggleSync={toggleSync}
+          onShare={handleShare}
+        />
+              </div>
+            </div>
+          </div>
+
+        {/* BATCH GENERATE VIEW - always mounted to preserve CSV state */}
+        <div className={`flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar ${viewMode === 'batch' ? 'block' : 'hidden'}`}>
+          <BatchUploader logoUrl={logoUrl} setLogoUrl={setLogoUrl} designParams={designParams} />
+        </div>
+
+      </main>
+
+      {/* Toast Notification */}
+      {isGenerating && (
+        <div className="fixed bottom-6 right-6 bg-slate-900 border border-slate-700 text-white px-5 py-4 rounded-xl shadow-2xl flex items-center gap-3 z-50 animate-bounce">
+          <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+          <span className="font-semibold text-sm tracking-wide">Generating High-Quality Print File...</span>
+        </div>
+      )}
+      {/* PREMIUM FEEDBACK UI */}
+      <AnimatePresence>
+        {toast && (
+          <Toast 
+            message={toast.message} 
+            type={toast.type} 
+            onClose={() => setToast(null)} 
+          />
+        )}
+      </AnimatePresence>
+
+      <Modal 
+        isOpen={modal.isOpen} 
+        onClose={closeModal} 
+        title={modal.title}
+        footer={modal.footer}
+      >
+        {modal.content}
+      </Modal>
     </div>
   );
 }

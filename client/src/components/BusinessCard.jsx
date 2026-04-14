@@ -91,12 +91,6 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
     textPrimary = '#ffffff';
     textSecondary = '#94a3b8';
     accentColor = '#2563eb';
-  } else if (template === 'xyzon') {
-    bgPrimary = '#ffffff';
-    bgSecondary = '#f8fafc';
-    textPrimary = '#0047AB';
-    textSecondary = '#4A5568';
-    accentColor = '#00D4FF';
   } else if (template === 'wave') {
     bgPrimary = '#1b3a6d';
     bgSecondary = '#162e55';
@@ -113,8 +107,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
 
   const smartLayout = getSmartLayout(name);
 
-  const isDarkBack = ['studio', 'skyline', 'ocean', 'abstract'].includes(template);
-  const qrFgColor = isDarkBack ? '#ffffff' : (template === 'xyzon' ? '#0047AB' : textPrimary);
+  const qrFgColor = (isElegant || isVanguard) ? textPrimary : (isStudio ? bgPrimary : bgSecondary);
 
 
   const commonProps = {
@@ -132,7 +125,6 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
       case 'skyline': return <SkylineTemplate {...commonProps} />;
       case 'ocean': return <OceanTemplate {...commonProps} />;
       case 'abstract': return <AbstractTemplate {...commonProps} />;
-      case 'xyzon': return <XyzonTemplate {...commonProps} />;
       default: return <VanguardTemplate {...commonProps} />;
     }
   };
@@ -1014,115 +1006,6 @@ const AbstractTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
                <img src={logoUrl} className="w-full h-full object-contain" />
             </div>
          )}
-      </div>
-
-    </div>
-  );
-};
-
-/* ── 16. XYZON PRO (Tech Minimalist Style) ── */
-const XyzonTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, fontFamily }) => {
-  const brandBlue = "#0047AB";
-  const brandCyan = "#00D4FF";
-  const textGray = "#4A5568";
-
-  const contactItems = [
-    { icon: Phone, text: formData.phone || "+91 98765 43210" },
-    { icon: Mail, text: formData.email || "hello@xyzon.in" },
-    { icon: Globe, text: formData.website || "www.xyzon.in", href: formData.website },
-  ].filter(item => item.text);
-
-  return (
-    <div className="absolute inset-0 z-10 w-full h-full bg-white flex flex-col overflow-hidden shadow-inner">
-      {/* Premium Top Border */}
-      <div className="absolute top-0 left-0 w-full h-[3px] z-[20]" style={{ backgroundColor: brandBlue }} />
-      
-      {/* Subtle Technical Border Grid (Optional visual flair) */}
-      <div className="absolute inset-x-0 top-0 h-[20%] opacity-[0.05] pointer-events-none" 
-           style={{ backgroundImage: 'radial-gradient(#0047AB 0.5px, transparent 0.5px)', backgroundSize: '20px 20px' }} />
-
-      <div className="flex-1 flex flex-col justify-between p-10 pt-12 pb-0">
-         
-         {/* Identity Row: Symmetry Row */}
-         <div className="flex justify-between items-start">
-            <div className="space-y-0.5">
-               <SmartTextField 
-                 text={name || "MARK SMITH"} 
-                 maxWidth={280} 
-                 defaultFontSize={30} 
-                 className="font-black tracking-tight"
-                 style={{ color: brandBlue, fontFamily: fontFamily || "'Inter', sans-serif" }}
-               />
-               <SmartTextField 
-                 text={title || "R&D MANAGER"} 
-                 maxWidth={280} 
-                 defaultFontSize={14} 
-                 className="font-bold tracking-[0.15em] uppercase"
-                 style={{ color: textGray, fontFamily: fontFamily || "'Inter', sans-serif" }}
-               />
-            </div>
-
-            <div className="flex flex-col items-end text-right">
-               <div className="mb-2 p-1 bg-white rounded-lg shadow-sm">
-                  {logoUrl ? <img src={logoUrl} className="w-16 h-16 object-contain" /> : 
-                     <div className="w-12 h-12 flex items-center justify-center border-2 rounded-md" style={{ borderColor: brandBlue }}>
-                        <span className="text-xl font-black" style={{ color: brandBlue }}>{initials}</span>
-                     </div>
-                  }
-               </div>
-               <SmartTextField 
-                 text={formData.company || "XYZON INNOVATIONS"} 
-                 maxWidth={180} 
-                 defaultFontSize={12} 
-                 className="font-black tracking-widest uppercase"
-                 style={{ color: brandBlue }}
-               />
-               <SmartTextField 
-                 text={formData.tagline || "INNOVATING FUTURE"} 
-                 maxWidth={180} 
-                 defaultFontSize={8} 
-                 className="font-bold tracking-[0.2em] uppercase opacity-60"
-                 style={{ color: textGray }}
-               />
-            </div>
-         </div>
-
-         {/* Contact Stack: Strictly Aligned Left */}
-         <div className="flex flex-col gap-3 mt-4 self-start">
-            {contactItems.map((item, idx) => (
-               <div key={idx} className="flex items-center gap-4">
-                  <item.icon size={16} strokeWidth={2.5} style={{ color: brandBlue }} />
-                  <SmartTextField 
-                    text={item.text} 
-                    maxWidth={280} 
-                    defaultFontSize={12} 
-                    className="font-semibold tracking-wide"
-                    style={{ color: "#333", fontFamily: fontFamily || "'Inter', sans-serif" }}
-                    href={item.href}
-                  />
-               </div>
-            ))}
-         </div>
-
-         {/* Xyzon Footer: Gradient Cyan to Blue */}
-         <div className="w-full h-11 mt-auto mx-[-40px] px-[40px] flex items-center justify-between z-10" 
-              style={{ background: `linear-gradient(90deg, ${brandCyan}, ${brandBlue})` }}>
-            <div className="flex items-center gap-2">
-               <MapPin size={12} color="white" />
-               <SmartTextField 
-                 text={formData.location || "BANGALORE, INDIA"} 
-                 maxWidth={200} 
-                 defaultFontSize={10} 
-                 className="font-semibold text-white tracking-wide uppercase"
-               />
-            </div>
-            <SmartTextField 
-              text={formData.tagline || "R&D INTERN / BUSINESS ANALYTICS"} 
-              maxWidth={200} 
-              defaultFontSize={10} 
-              className="font-bold text-white tracking-widest uppercase opacity-90"
-            />
-         </div>
       </div>
 
     </div>
