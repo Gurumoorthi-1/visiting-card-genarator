@@ -1186,10 +1186,14 @@ const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }
                  style={{ color: royal, fontFamily: "'Inter', sans-serif" }}
                />
                
-               {/* Divider Line with diamond */}
-               <div className="flex items-center gap-0 mt-3 mb-2">
-                  <div className="h-[1.5px] flex-1" style={{ background: `linear-gradient(to right, ${navy}, transparent)` }} />
-                  <div className="w-2 h-2 rotate-45 shrink-0" style={{ background: navy }} />
+               {/* Design Divider Line with Sparkle/Star at the end */}
+               <div className="flex items-center gap-0 mt-2.5 mb-2.5">
+                  <div className="h-[1px] w-[180px]" style={{ backgroundColor: navy }} />
+                  <div className="shrink-0 -ml-0.5">
+                     <svg width="10" height="10" viewBox="0 0 24 24" fill={navy}>
+                        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                     </svg>
+                  </div>
                </div>
             </div>
 
