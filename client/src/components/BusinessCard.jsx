@@ -720,44 +720,44 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
          <path d="M 290 300 Q 440 280 540 130 L 540 300 Z" fill={navy} />
       </svg>
 
-      <div className="relative z-10 w-full h-full flex flex-col justify-between px-12 py-10">
+      <div className="relative z-10 w-full h-full flex flex-col justify-between px-10 py-10">
          {/* Top Section */}
-         <div className="flex justify-between items-start w-full pr-4">
+         <div className="flex justify-between items-start w-full gap-4">
             
-            <div className="flex flex-col mt-2">
+            <div className="flex flex-col mt-2 flex-1 min-w-0">
                <SmartTextField 
                  text={name || "Daniel Gallego"} 
-                 maxWidth={300} 
+                 maxWidth={260} 
                  defaultFontSize={30} 
                  className={`font-semibold tracking-wide ${smartLayout.nameTracking}`}
                  style={{ color: textDark, fontFamily: "'Inter', sans-serif" }}
                />
                <SmartTextField 
                  text={title || "Marketing Manager"} 
-                 maxWidth={300} 
+                 maxWidth={260} 
                  defaultFontSize={13} 
                  className="font-bold tracking-wide mt-0.5"
                  style={{ color: gold, fontFamily: "'Inter', sans-serif" }}
                />
             </div>
 
-            <div className="flex flex-col items-end justify-start -mt-2 relative z-20 w-[240px]">
-               <div className={`flex justify-end items-start mb-2 ${smartLayout.logoScaleClass}`}>
-                  {logoUrl ? <img src={logoUrl} className="w-[180px] h-auto max-h-[85px] object-contain drop-shadow-md origin-top-right" /> : 
+            <div className="flex flex-col items-end justify-start -mt-2 relative z-20 shrink-0">
+               <div className={`flex justify-end items-start mb-1.5 ${smartLayout.logoScaleClass}`} style={{ transformOrigin: "top right" }}>
+                  {logoUrl ? <img src={logoUrl} className="w-[160px] h-auto max-h-[85px] object-contain drop-shadow-md" /> : 
                      (
-                       <div className="w-20 h-20 rounded-full border border-slate-300 flex items-center justify-center bg-white shadow-sm">
-                          <span className="text-4xl font-black text-slate-400">{initials}</span>
+                       <div className="w-16 h-16 rounded-full border border-slate-300 flex items-center justify-center bg-white shadow-sm">
+                          <span className="text-3xl font-black text-slate-400">{initials}</span>
                        </div>
                      )
                   }
                </div>
                <SmartTextField 
                  text={formData.company || "XYZON INNOVATIONS PRIVATE LIMITED"} 
-                 maxWidth={220} 
-                 defaultFontSize={11} 
-                 minFontSize={8}
+                 maxWidth={200} 
+                 defaultFontSize={10} 
+                 minFontSize={7}
                  maxLines={2}
-                 className="font-black font-sans tracking-wide uppercase leading-tight"
+                 className="font-black font-sans tracking-wide uppercase leading-snug"
                  style={{ color: textDark, textAlign: 'right' }}
                />
             </div>
