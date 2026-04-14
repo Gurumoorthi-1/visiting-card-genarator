@@ -49,7 +49,17 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
 
   const { name, title, company, phone, email, website, location, linkedin, twitter, facebook, tagline } = formData;
 
-  const { template, bgPrimary, bgSecondary, textPrimary, textSecondary, accentColor, fontFamily } = designParams;
+  let { template, bgPrimary, bgSecondary, textPrimary, textSecondary, accentColor, fontFamily } = designParams;
+
+  const isElegant = template === 'elegant';
+  
+  if (isElegant) {
+    bgPrimary = '#fafafa';
+    bgSecondary = '#f0f0f0';
+    textPrimary = '#1f223a';
+    textSecondary = '#5a5b65';
+    accentColor = '#cf9e38';
+  }
 
   const initials = formData.name
     ? formData.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
@@ -58,6 +68,8 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
   const hasSocial = linkedin || twitter || facebook;
 
   const smartLayout = getSmartLayout(name);
+
+  const qrFgColor = isElegant ? textPrimary : bgSecondary;
 
 
   const commonProps = {
@@ -113,7 +125,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
                 value={vCardData || "No Data"} 
                 size={46} 
                 bgColor={"#ffffff"} 
-                fgColor={bgSecondary}
+                fgColor={qrFgColor}
                 level={"H"}
               />
               <span className="text-[5px] font-black uppercase tracking-widest text-slate-400">Scan</span>
@@ -142,7 +154,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
                   value={vCardData || "No Data"} 
                   size={140} 
                   bgColor={"#ffffff"} 
-                  fgColor={bgSecondary} 
+                  fgColor={qrFgColor} 
                   level={"H"}
                 />
               </div>
