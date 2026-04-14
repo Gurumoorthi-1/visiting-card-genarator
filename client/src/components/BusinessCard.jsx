@@ -617,8 +617,8 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
          </g>
       </svg>
 
-      {/* Content */}
-      <div className="relative z-10 w-[70%] h-full flex flex-col justify-center px-10 py-8">
+      {/* Content (Shifted slightly up with justify-start + pt) */}
+      <div className="relative z-10 w-[70%] h-full flex flex-col justify-start px-10 pt-14 pb-8">
          <div className="mb-5 mt-2 relative">
             
             {/* Company Info row */}
@@ -740,8 +740,8 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
             <SmartTextField 
               text={name || 'YOUR NAME'} 
               maxWidth={230} 
-              defaultFontSize={34} 
-              minFontSize={18} 
+              defaultFontSize={40} 
+              minFontSize={20} 
               maxLines={1} 
               className={`font-black tracking-tight leading-none uppercase ${smartLayout.nameTracking}`} 
               style={{ color: 'white', fontFamily: "'Montserrat', sans-serif" }} 
@@ -853,7 +853,9 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
                <SmartTextField 
                  text={name || "Daniel Gallego"} 
                  maxWidth={260} 
-                 defaultFontSize={30} 
+                 defaultFontSize={38} 
+                 minFontSize={22}
+                 maxLines={1}
                  className={`font-semibold tracking-wide ${smartLayout.nameTracking}`}
                  style={{ color: textDark, fontFamily: "'Inter', sans-serif" }}
                />
