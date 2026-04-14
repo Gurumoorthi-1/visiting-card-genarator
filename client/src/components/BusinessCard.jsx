@@ -104,7 +104,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
       case 'elegant': return <ElegantTemplate {...commonProps} />;
       case 'studio': return <StudioTemplate {...commonProps} />;
       case 'skyline': return <SkylineTemplate {...commonProps} />;
-      case 'swift': return <SwiftTemplate {...commonProps} />;
+      case 'ocean': return <OceanTemplate {...commonProps} />;
       case 'modern':
       default: return <ModernTemplate {...commonProps} />;
     }
@@ -137,7 +137,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
           
           {/* Inject QR Code firmly on the Front Face - Position varies by template for safety */}
           {isBatchExport && (
-            <div className={`absolute ${['wave', 'skyline'].includes(template) ? 'top-3 right-3' : 'bottom-3 right-3'} p-1 bg-white rounded-[6px] shadow-lg border border-slate-100 z-50 flex flex-col items-center gap-0.5`}>
+            <div className={`absolute ${['wave', 'skyline', 'ocean'].includes(template) ? 'top-3 right-3' : 'bottom-3 right-3'} p-1 bg-white rounded-[6px] shadow-lg border border-slate-100 z-50 flex flex-col items-center gap-0.5`}>
               <QRCodeSVG 
                 value={vCardData || "No Data"} 
                 size={42} 
@@ -1131,90 +1131,109 @@ const SkylineTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
   );
 };
 
-/* ── 14. SWIFT PRO (Black & Gold Refined) ── */
-const SwiftTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
-  const goldGradient = "linear-gradient(135deg, #d4af37 0%, #f9e29c 50%, #b8860b 100%)";
-  const bgLight = "#ffffff";
-  const goldSolid = "#d4af37";
+/* ── 14. OCEAN PRO (Marble & Swish Style) ── */
+const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
+  const navy = "#1b3a6d";
+  const royal = "#2563eb";
+  const lightBlue = "#60a5fa";
 
   const contactItems = [
+    { icon: Phone, text: formData.phone || "+123-456-7890" },
     { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" },
-    { icon: Phone, text: formData.phone || "123-456-7890" },
     { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
-    { icon: Globe, text: formData.website || "reallygreatsite.com", href: formData.website },
+    { icon: Globe, text: formData.website || "www.reallygreatsite.com" },
   ].filter(item => item.text);
 
   return (
-    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex bg-white" style={{ backgroundColor: bgLight }}>
+    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex bg-[#fdfdfd]">
       
-      {/* Background Patterns - Perfectly Matched to Image */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <svg className="w-full h-full" viewBox="0 0 540 300" preserveAspectRatio="none">
-          <defs>
-             <linearGradient id="goldMetallic" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#b8860b" />
-                <stop offset="30%" stopColor="#f9e29c" />
-                <stop offset="60%" stopColor="#d4af37" />
-                <stop offset="100%" stopColor="#8a6d3b" />
-             </linearGradient>
-          </defs>
-          
-          {/* Main Thick Black Area */}
-          <path d="M 0 0 L 400 0 Q 150 120 0 300 Z" fill="#000000" />
-          
-          {/* Gold Swoosh Band - Perfectly flush with black */}
-          <path d="M 400 0 Q 150 120 0 300 L 20 300 Q 170 120 420 0 Z" fill="url(#goldMetallic)" />
-          
-          {/* Subtle Accent underneath */}
-          <path d="M 420 0 Q 170 120 20 300 L 45 300 Q 195 120 445 0 Z" fill="#d4af37" opacity="0.3" />
-        </svg>
-      </div>
+      {/* Marble Texture Overlay (Subtle) */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0" style={{ 
+        backgroundImage: 'url("https://www.transparenttextures.com/patterns/marble-similar.png")',
+        backgroundSize: '400px'
+      }} />
 
-      {/* Content Area */}
-      <div className="relative z-10 w-full flex flex-col justify-center items-end pr-14 pl-52 py-10">
+      {/* Abstract Swishes */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-1" viewBox="0 0 540 300" preserveAspectRatio="none">
+         {/* Top Left Swishes */}
+         <path d="M -20 120 Q 80 80 140 -20 L -20 -20 Z" fill={lightBlue} opacity="0.4" />
+         <path d="M -20 100 Q 60 40 100 -20 L -20 -20 Z" fill={royal} opacity="0.6" />
+         <path d="M -20 80 Q 40 20 80 -20 L -20 -20 Z" fill={navy} />
+
+         {/* Bottom Right Swishes */}
+         <path d="M 400 320 Q 460 220 560 180 L 560 320 Z" fill={lightBlue} opacity="0.4" />
+         <path d="M 440 320 Q 500 240 560 220 L 560 320 Z" fill={royal} opacity="0.6" />
+         <path d="M 480 320 Q 520 260 560 250 L 560 320 Z" fill={navy} />
+      </svg>
+
+      <div className="relative z-10 w-full h-full flex items-center justify-between px-12 py-10">
          
-         <div className="text-right mb-14 mr-2">
-            <SmartTextField 
-              text={name || "Aaron Loeb"} 
-              maxWidth={300} 
-              defaultFontSize={38} 
-              className="font-black text-slate-900 tracking-tight"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            />
-            <SmartTextField 
-              text={title || "Graphics Designer"} 
-              maxWidth={300} 
-              defaultFontSize={15} 
-              className="font-medium italic text-slate-600 tracking-widest mt-1 opacity-80"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            />
-         </div>
-
-         {/* Contact List */}
-         <div className="flex flex-col gap-4 items-end">
-            {contactItems.map((contact, i) => (
-               <div key={i} className="flex items-center justify-end gap-3.5 group">
-                  <SmartTextField 
-                    text={contact.text} 
-                    maxWidth={260} 
-                    defaultFontSize={14} 
-                    className="font-bold text-slate-800 tracking-tight"
-                    href={contact.href}
-                    style={{ textAlign: 'right', fontFamily: "'Inter', sans-serif" }}
-                  />
-                  <div className="w-[28px] h-[28px] rounded-full flex items-center justify-center shrink-0 shadow-lg border border-yellow-200/20" style={{ background: goldSolid }}>
-                     <contact.icon strokeWidth={2.5} size={14} color="#000000" />
-                  </div>
+         {/* Details Section */}
+         <div className="flex flex-col justify-center flex-1 max-w-[55%]">
+            <div className="mb-6">
+               <SmartTextField 
+                 text={name || "Alexander Aronowitz"} 
+                 maxWidth={280} 
+                 defaultFontSize={30} 
+                 className="font-bold tracking-tight"
+                 style={{ color: navy, fontFamily: "'PT Serif', serif" }}
+               />
+               <SmartTextField 
+                 text={title || "Graphic Designer"} 
+                 maxWidth={280} 
+                 defaultFontSize={16} 
+                 className="font-medium mt-1"
+                 style={{ color: royal, fontFamily: "'Inter', sans-serif" }}
+               />
+               
+               {/* Divider Line with diamond */}
+               <div className="flex items-center gap-0 mt-3 mb-2">
+                  <div className="h-[1.5px] flex-1" style={{ background: `linear-gradient(to right, ${navy}, transparent)` }} />
+                  <div className="w-2 h-2 rotate-45 shrink-0" style={{ background: navy }} />
                </div>
-            ))}
+            </div>
+
+            <div className="flex flex-col gap-2.5">
+               {contactItems.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                     <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: navy }}>
+                        <item.icon size={12} color="white" />
+                     </div>
+                     <SmartTextField 
+                       text={item.text} 
+                       maxWidth={240} 
+                       defaultFontSize={11} 
+                       className="font-medium tracking-wide"
+                       style={{ color: '#444' }}
+                       href={item.href}
+                     />
+                  </div>
+               ))}
+            </div>
          </div>
 
-         {/* Bottom Logo Integration */}
-         {logoUrl && (
-            <div className="absolute bottom-6 left-6 w-24 h-24 z-20 flex items-center justify-center opacity-40">
-               <img src={logoUrl} className="max-w-full max-h-full object-contain filter brightness-0 invert" />
+         {/* Logo Section */}
+         <div className="flex flex-col items-center justify-center text-center pr-4">
+            <div className={`mb-4 w-32 h-32 flex items-center justify-center relative`}>
+               {/* Hexagon Border */}
+               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
+                  <polygon points="50 5, 93 25, 93 75, 50 95, 7 75, 7 25" fill="none" stroke={navy} strokeWidth="4" />
+               </svg>
+               {logoUrl ? <img src={logoUrl} className="w-24 h-24 object-contain relative z-10" /> : 
+                  <div className="relative z-10 flex flex-col items-center">
+                     <span className="text-4xl font-black" style={{ color: navy }}>{initials}</span>
+                  </div>
+               }
             </div>
-         )}
+            <SmartTextField 
+              text={formData.company || "Wardiere Inc."} 
+              maxWidth={180} 
+              defaultFontSize={20} 
+              className="font-bold tracking-tight"
+              style={{ color: navy, fontFamily: "'PT Serif', serif" }}
+            />
+         </div>
+
       </div>
 
     </div>
