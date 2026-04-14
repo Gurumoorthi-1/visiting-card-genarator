@@ -37,8 +37,8 @@ const LivePreview = ({ formData, logoUrl, designParams, onGenerateAR }) => {
       <div className="w-full max-w-3xl flex flex-col items-center gap-4 sm:gap-10 p-4 sm:p-0 pb-20 sm:pb-10">
 
         {/* ── Toolbar ── */}
-        <div className="flex items-center gap-2 px-3 py-2 bg-white rounded-2xl shadow-sm border border-slate-100 self-stretch justify-between">
-          <div className="flex items-center gap-1">
+        <div className="flex flex-col sm:flex-row items-center gap-3 px-3 py-2 sm:py-2 bg-white rounded-2xl shadow-sm border border-slate-100 self-stretch justify-between">
+          <div className="flex flex-wrap items-center justify-center gap-1 w-full sm:w-auto">
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-white text-xs font-bold shadow-sm" style={{ background: designParams.accentColor }}>
               <Monitor className="w-3.5 h-3.5" strokeWidth={2.5} />
               <span>Preview</span>
@@ -60,10 +60,10 @@ const LivePreview = ({ formData, logoUrl, designParams, onGenerateAR }) => {
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] text-slate-400 font-medium tracking-wide">540 × 300 px</span>
+          <div className="flex items-center justify-center gap-2 w-full sm:w-auto border-t sm:border-t-0 border-slate-100 pt-2 sm:pt-0 pb-1 sm:pb-0">
+            <span className="text-[10px] text-slate-400 font-medium tracking-wide whitespace-nowrap">540 × 300 px</span>
             <div className="w-px h-4 bg-slate-200" />
-            <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md border" style={{ background: `${designParams.accentColor}1A`, color: designParams.accentColor, borderColor: `${designParams.accentColor}40` }}>
+            <span className="text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md border max-w-[120px] truncate" style={{ background: `${designParams.accentColor}1A`, color: designParams.accentColor, borderColor: `${designParams.accentColor}40` }}>
               {TEMPLATES[designParams.template]?.name || 'Template'}
             </span>
           </div>

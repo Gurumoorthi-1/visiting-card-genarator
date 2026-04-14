@@ -204,7 +204,7 @@ const PublicCard = () => {
                <div className="w-10 h-10 bg-indigo-500/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-indigo-500 group-hover:text-white transition-all">
                   <link.icon className="w-5 h-5" />
                </div>
-               <div className="flex-1 text-left">
+               <div className="flex-1 text-left min-w-0">
                   <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{link.label}</p>
                   <p className="font-bold text-sm truncate mr-2">{link.value}</p>
                </div>
