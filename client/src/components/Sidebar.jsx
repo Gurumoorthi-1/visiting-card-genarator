@@ -60,7 +60,7 @@ const fetchTaglines = async (jobTitle) => {
         'Authorization': `Bearer ${GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: "llama3-8b-8192", // Super fast flagship model
+        model: "llama-3.1-8b-instant", // Direct successor to decommissioned model
         messages: [
           {
             role: "system", 

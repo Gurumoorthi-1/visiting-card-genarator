@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { UploadCloud, FileJson, FileText, Loader2 } from 'lucide-react';
 import * as pdfjsLib from 'pdfjs-dist';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Initialize PDF.js worker securely with correct unpkg CDN
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
+const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
 const SmartImport = ({ setFormData, showToast }) => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -88,31 +86,44 @@ Important:
 `;
 
   const extractWithAI = async (textPayload, systemInstruction) => {
-    if (!genAI) {
-      showToast('No Gemini API Key found.', 'error');
+    if (!GROQ_API_KEY) {
+      showToast('No Groq API Key found.', 'error');
       return;
     }
     
     try {
-      const model = genAI.getGenerativeModel({ 
-         model: "gemini-2.5-flash",
-         systemInstruction: systemInstruction
+      // Limit payload to 4000 characters
+      const promptText = textPayload.substring(0, 4000);
+      
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${GROQ_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: "llama-3.3-70b-versatile", // Using 70b for high-quality structured parsing
+          messages: [
+            { role: "system", content: systemInstruction },
+            { role: "user", content: `Extract the profile data from the following text and return ONLY valid JSON.\n\nPayload:\n${promptText}` }
+          ],
+          temperature: 0.1, // Low temperature for deterministic JSON
+          response_format: { type: "json_object" }
+        })
       });
+
+      const data = await response.json();
       
-      // Limit payload to 3500 characters (approx 1 full page) to save massive tokens
-      const promptText = textPayload.substring(0, 3500);
-      const prompt = `Extract the profile data from the following text and return ONLY valid JSON.\n\nPayload:\n${promptText}`;
-      
-      const result = await model.generateContent(prompt);
-      const output = result.response.text();
-      
-      // Extract JSON from output
-      const jsonStr = output.replace(/```json|```/g, '').trim();
-      const data = JSON.parse(jsonStr);
+      if (data.error) {
+        throw new Error(data.error.message);
+      }
+
+      const output = data.choices[0].message.content;
+      const parsedData = JSON.parse(output);
 
       setFormData(prev => ({
         ...prev,
-        ...Object.fromEntries(Object.entries(data).filter(([_, v]) => v !== ""))
+        ...Object.fromEntries(Object.entries(parsedData).filter(([_, v]) => v !== ""))
       }));
       
       showToast('Magic Fill Complete!', 'success');
