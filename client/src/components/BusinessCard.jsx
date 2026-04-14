@@ -565,10 +565,10 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
   };
 
   const contactItems = [
-    { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
-    { icon: Mail, text: formData.email || "hello@reallygreatsite.com", href: formData.email ? `mailto:${formData.email}` : null },
+    { icon: Phone, text: formData.phone || "+123-456-7890" },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
     { icon: Globe, text: formData.website, href: formData.website },
-    { icon: MapPin, text: formData.location, href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
+    { icon: MapPin, text: formData.location },
   ];
 
   return (
@@ -760,10 +760,10 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
 
           <div className="space-y-3 mt-4">
             {[
-              { icon: Phone, text: formData.phone || '+00 123 456 789', href: formData.phone ? `tel:${formData.phone}` : null },
-              { icon: Mail, text: formData.email || 'email address goes here', href: formData.email ? `mailto:${formData.email}` : null },
+              { icon: Phone, text: formData.phone || '+00 123 456 789' },
+              { icon: Mail, text: formData.email || 'email address goes here' },
               { icon: Globe, text: formData.website || 'website goes here', href: formData.website },
-              { icon: MapPin, text: formData.location || 'address goes here', href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null }
+              { icon: MapPin, text: formData.location || 'address goes here' }
             ].filter(Boolean).map((item, idx) => {
               return (
                 <div key={idx} className="flex items-center gap-3">
@@ -893,10 +893,10 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
          {/* Contact Section */}
          <div className="flex flex-col gap-3 mb-1 ml-1 relative z-20">
             {[
-              { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
-              { icon: Mail, text: formData.email, href: formData.email ? `mailto:${formData.email}` : null }, 
+              { icon: Phone, text: formData.phone || "+123-456-7890" },
+              { icon: Mail, text: formData.email }, 
               { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
-              { icon: MapPin, text: formData.location || "123 Anywhere St., Any City", href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null }
+              { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" }
             ].filter(Boolean).map((contact, i) => {
                return (
                  <div key={i} className="flex items-center gap-3.5">
@@ -931,10 +931,10 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout 
 
   // Contacts mapped exactly to match user's screenshot layout Order: Phone, MapPin, Globe, Mail
   const contactItems = [
-    { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
-    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City", href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
+    { icon: Phone, text: formData.phone || "+123-456-7890" },
+    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" },
     { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
-    { icon: Mail, text: formData.email || "hello@reallygreatsite.com", href: formData.email ? `mailto:${formData.email}` : null },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
   ].filter(item => item.text);
 
   return (
