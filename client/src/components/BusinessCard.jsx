@@ -902,11 +902,11 @@ const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, 
   );
 };
 
-/* ── 15. ABSTRACT PRO (Corporate Deep Blue Style) ── */
+/* ── 15. ABSTRACT PRO (High-Fidelity Corporate Blue) ── */
 const AbstractTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, fontFamily }) => {
-  const navy = "#0f172a";
-  const blue600 = "#2563eb";
-  const blue800 = "#1e40af";
+  const deepNavy = "#040c1d";
+  const midBlue = "#0a2456";
+  const brightBlue = "#1d58d1";
 
   const contactItems = [
     { icon: Phone, text: formData.phone || "+123-456-7890" },
@@ -915,71 +915,101 @@ const AbstractTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
     { icon: MapPin, text: formData.location || "123 Anywhere St., Any City, ST 12345" },
   ].filter(item => item.text);
 
-  return (
-    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex" style={{ backgroundColor: navy }}>
-      
-      {/* Background Abstract Shapes */}
-      <div className="absolute inset-0 z-0">
-         <svg className="w-full h-full" viewBox="0 0 540 300" preserveAspectRatio="none">
-            <defs>
-               <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: blue800, stopOpacity: 0.8 }} />
-                  <stop offset="100%" style={{ stopColor: blue600, stopOpacity: 0.4 }} />
-               </linearGradient>
-               <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: blue600, stopOpacity: 0.6 }} />
-                  <stop offset="100%" style={{ stopColor: navy, stopOpacity: 0 }} />
-               </linearGradient>
-            </defs>
-            <circle cx="500" cy="150" r="220" fill="url(#grad1)" />
-            <circle cx="460" cy="180" r="180" fill="url(#grad2)" />
-            <path d="M 350 0 Q 500 150 350 300 L 540 300 L 540 0 Z" fill={navy} opacity="0.3" />
-         </svg>
-      </div>
+  const fontStack = fontFamily || "'Inter', sans-serif";
 
-      <div className="relative z-10 w-full h-full flex flex-col justify-between p-12 py-14">
+  return (
+    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex" style={{ backgroundColor: deepNavy }}>
+      
+      {/* Complex Abstract Background (Layered Arcs & Depth) */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 540 300" preserveAspectRatio="none">
+         <defs>
+            <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+               <stop offset="0%" style={{ stopColor: brightBlue, stopOpacity: 0.8 }} />
+               <stop offset="100%" style={{ stopColor: midBlue, stopOpacity: 0.2 }} />
+            </linearGradient>
+            <filter id="shadow">
+               <feDropShadow dx="0" dy="0" stdDeviation="15" floodColor={brightBlue} floodOpacity="0.4"/>
+            </filter>
+         </defs>
          
-         {/* Top Section: Identity */}
-         <div className="space-y-1">
+         {/* Background Glow */}
+         <circle cx="580" cy="150" r="300" fill="url(#glowGrad)" opacity="0.4" />
+         
+         {/* Large Arc Layer 1 */}
+         <path 
+           d="M 320 0 C 450 60 450 240 320 300 L 540 300 L 540 0 Z" 
+           fill={deepNavy} 
+           opacity="0.95" 
+         />
+         
+         {/* Highlight Edge 1 */}
+         <path 
+            d="M 318 0 C 448 60 448 240 318 300" 
+            fill="none" 
+            stroke={brightBlue} 
+            strokeWidth="3" 
+            opacity="0.6"
+            filter="url(#shadow)"
+         />
+
+         {/* Large Arc Layer 2 (Smaller overlay) */}
+         <path 
+           d="M 400 -50 C 550 50 550 250 400 350 L 540 350 L 540 -50 Z" 
+           fill={midBlue} 
+           opacity="0.3" 
+         />
+
+         {/* Far Right Accent */}
+         <path 
+           d="M 500 0 Q 550 150 500 300 L 540 300 L 540 0 Z" 
+           fill={brightBlue} 
+           opacity="0.5" 
+         />
+      </svg>
+
+      <div className="relative z-10 w-full h-full flex flex-col justify-center p-14 pl-16 gap-16">
+         
+         {/* Identity Section (Top-ish) */}
+         <div className="flex flex-col gap-0.5">
             <SmartTextField 
               text={name || "ALFREDO TORRES"} 
-              maxWidth={350} 
+              maxWidth={380} 
               defaultFontSize={34} 
               className="font-black tracking-tight text-white uppercase leading-none"
-              style={{ fontFamily: fontFamily || "'Inter', sans-serif" }}
+              style={{ fontFamily: fontStack }}
             />
             <SmartTextField 
               text={title || "General Manager"} 
-              maxWidth={350} 
-              defaultFontSize={18} 
-              className="font-medium text-white/80"
-              style={{ fontFamily: fontFamily || "'Inter', sans-serif" }}
+              maxWidth={380} 
+              defaultFontSize={20} 
+              className="font-medium text-white/90"
+              style={{ fontFamily: fontStack }}
             />
          </div>
 
-         {/* Bottom Section: Contacts */}
-         <div className="flex flex-col gap-3">
+         {/* Contacts Section (Bottom-ish) */}
+         <div className="flex flex-col gap-4">
             {contactItems.map((item, idx) => (
-               <div key={idx} className="flex items-center gap-4">
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
-                     <item.icon size={16} strokeWidth={2.5} style={{ color: navy }} />
+               <div key={idx} className="flex items-center gap-5">
+                  <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center shrink-0 shadow-[0_4px_12px_rgba(255,255,255,0.2)]">
+                     <item.icon size={18} strokeWidth={2.5} style={{ color: deepNavy }} />
                   </div>
                   <SmartTextField 
                     text={item.text} 
-                    maxWidth={300} 
-                    defaultFontSize={13} 
-                    className="font-semibold tracking-wide text-white/90"
-                    style={{ fontFamily: fontFamily || "'Inter', sans-serif" }}
+                    maxWidth={320} 
+                    defaultFontSize={14} 
+                    className="font-medium tracking-wide text-white/95"
+                    style={{ fontFamily: fontStack }}
                     href={item.href}
                   />
                </div>
             ))}
          </div>
 
-         {/* Optional Logo overlay (if user adds a logo) */}
+         {/* Optional Logo overlay */}
          {logoUrl && (
-            <div className="absolute top-10 right-10 w-24 h-24 flex items-center justify-center opacity-80 mix-blend-screen">
-               <img src={logoUrl} className="w-full h-full object-contain" />
+            <div className="absolute top-12 right-12 w-24 h-24 flex items-center justify-center opacity-70 mix-blend-screen group hover:opacity-100 transition-opacity">
+               <img src={logoUrl} className="w-full h-full object-contain filter brightness-110" />
             </div>
          )}
       </div>
@@ -987,5 +1017,6 @@ const AbstractTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
     </div>
   );
 };
+
 
 export default BusinessCard;
