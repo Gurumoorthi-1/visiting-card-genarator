@@ -1132,7 +1132,7 @@ const SkylineTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
 };
 
 /* ── 14. OCEAN PRO (Marble & Swish Style) ── */
-const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
+const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, fontFamily }) => {
   const navy = "#1b3a6d";
   const royal = "#2563eb";
   const lightBlue = "#60a5fa";
@@ -1141,7 +1141,7 @@ const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }
     { icon: Phone, text: formData.phone || "+123-456-7890" },
     { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" },
     { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
-    { icon: Globe, text: formData.website || "www.reallygreatsite.com" },
+    { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
   ].filter(item => item.text);
 
   return (
@@ -1176,14 +1176,14 @@ const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }
                  maxWidth={280} 
                  defaultFontSize={30} 
                  className="font-bold tracking-tight"
-                 style={{ color: navy, fontFamily: "'PT Serif', serif" }}
+                 style={{ color: navy, fontFamily: fontFamily || "'PT Serif', serif" }}
                />
                <SmartTextField 
                  text={title || "Graphic Designer"} 
                  maxWidth={280} 
                  defaultFontSize={16} 
                  className="font-medium mt-1"
-                 style={{ color: royal, fontFamily: "'Inter', sans-serif" }}
+                 style={{ color: royal, fontFamily: fontFamily || "'Inter', sans-serif" }}
                />
                
                {/* Design Divider Line with Sparkle/Star at the end */}
@@ -1234,7 +1234,7 @@ const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }
               maxWidth={180} 
               defaultFontSize={20} 
               className="font-bold tracking-tight"
-              style={{ color: navy, fontFamily: "'PT Serif', serif" }}
+              style={{ color: navy, fontFamily: fontFamily || "'PT Serif', serif" }}
             />
          </div>
 
