@@ -578,42 +578,24 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
       <div className="absolute inset-0 pointer-events-none opacity-[0.04] z-[5]" 
            style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
 
-      {/* Geometric Right Pattern (Smaller scale r=48) */}
+      {/* Geometric Right Pattern (Matching provided image) */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 540 300">
-         <g>
-           {/* FILLS */}
-           {/* Col 2 */}
-           <D cx={405} cy={105} type="light" />
-           <D cx={405} cy={195} type="light" />
-           
-           {/* Col 3 */}
-           <D cx={450} cy={60} type="dark" />
-           <D cx={450} cy={240} type="dark" />
-           
-           {/* Col 4 */}
-           <D cx={495} cy={15} type="light" />
-           <D cx={495} cy={105} type="dark" />
-           <D cx={495} cy={195} type="light" />
-           <D cx={495} cy={285} type="dark" />
+         <g transform="translate(30, 0)">
+           {/* Column of diamonds on the right edge */}
+           <D cx={460} cy={20} type="dark" r={65} />
+           <D cx={460} cy={110} type="light" r={65} />
+           <D cx={460} cy={200} type="dark" r={65} />
+           <D cx={460} cy={290} type="light" r={65} />
 
-           {/* Col 5 */}
-           <D cx={540} cy={-30} type="dark" />
-           <D cx={540} cy={60} type="light" />
-           <D cx={540} cy={150} type="dark" />
-           <D cx={540} cy={240} type="light" />
-           <D cx={540} cy={330} type="dark" />
+           {/* Overlapping outline diamonds for depth */}
+           <D cx={400} cy={65} type="outline" r={65} />
+           <D cx={400} cy={155} type="outline" r={65} />
+           <D cx={400} cy={245} type="outline" r={65} />
 
-           {/* Col 6 */}
-           <D cx={585} cy={15} type="dark" />
-           <D cx={585} cy={105} type="light" />
-           <D cx={585} cy={195} type="dark" />
-           <D cx={585} cy={285} type="light" />
-
-           {/* OUTLINES */}
-           <D cx={360} cy={150} type="outline" />
-           <D cx={450} cy={150} type="outline" />
-           <D cx={495} cy={285} type="outline" />
-           <D cx={540} cy={60} type="outline" />
+           {/* Further right diamonds to ensure edge coverage */}
+           <D cx={520} cy={65} type="light" r={65} />
+           <D cx={520} cy={155} type="dark" r={65} />
+           <D cx={520} cy={245} type="light" r={65} />
          </g>
       </svg>
 
