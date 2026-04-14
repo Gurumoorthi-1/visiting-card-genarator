@@ -374,57 +374,56 @@ function Editor() {
         ? `Check out my Digital Business Card: ${micrositeUrl}` 
         : 'Check out my Business Card!';
 
-      // 3. SHARE - Try multiple approaches
+      const shareData = {
+        title: shareTitle,
+        text: shareText,
+        url: micrositeUrl || window.location.origin
+      };
+
+      // 3. SHARE - Optimized for Mobile
       if (navigator.share) {
         try {
-          // Try sharing with file + text (best experience)
-          await navigator.share({
-            files: [file],
-            title: shareTitle,
-            text: shareText
-          });
-          showToast('Shared successfully!', 'success');
-        } catch (fileShareErr) {
-          if (fileShareErr.name === 'AbortError') return;
+          // Check if file sharing is supported
+          const canShareFile = navigator.canShare && navigator.canShare({ files: [file] });
           
-          // File share failed - try text-only share (just the link)
-          try {
+          if (canShareFile) {
             await navigator.share({
-              title: shareTitle,
-              text: shareText
+              ...shareData,
+              files: [file]
             });
-            showToast('Link shared! Image saved to downloads.', 'success');
-            // Also download the image
-            const a = document.createElement('a');
-            a.download = 'BusinessCard.jpg';
-            a.href = dataUrl;
-            a.click();
-          } catch (textShareErr) {
-            if (textShareErr.name !== 'AbortError') {
-              // Both failed - just download
-              const a = document.createElement('a');
-              a.download = 'BusinessCard.jpg';
-              a.href = dataUrl;
-              a.click();
-              showToast('Image downloaded!', 'success');
-            }
+          } else {
+            // Share link + text only
+            await navigator.share(shareData);
           }
+          showToast('Shared successfully!', 'success');
+        } catch (shareErr) {
+          if (shareErr.name === 'AbortError') return;
+          console.error('Share failed, falling back:', shareErr);
+          
+          // Fallback: Copy link and download
+          try {
+            await navigator.clipboard.writeText(shareText);
+            showToast('Link copied! Downloading card...', 'success');
+          } catch {
+            showToast('Downloading card...', 'success');
+          }
+          
+          const a = document.createElement('a');
+          a.download = 'BusinessCard.jpg';
+          a.href = dataUrl;
+          a.click();
         }
       } else {
-        // No share API (desktop) - download image
+        // Desktop / No Share API
         const a = document.createElement('a');
         a.download = 'BusinessCard.jpg';
         a.href = dataUrl;
         a.click();
         
-        if (micrositeUrl) {
-          try {
-            await navigator.clipboard.writeText(shareText);
-            showToast('Image downloaded! Link copied to clipboard.', 'success');
-          } catch {
-            showToast('Image downloaded!', 'success');
-          }
-        } else {
+        try {
+          await navigator.clipboard.writeText(shareText);
+          showToast('Image downloaded! Link copied to clipboard.', 'success');
+        } catch {
           showToast('Image downloaded!', 'success');
         }
       }

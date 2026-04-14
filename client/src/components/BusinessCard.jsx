@@ -571,12 +571,6 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
     { icon: MapPin, text: formData.location, href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
   ];
 
-  // Dynamically add social links if they exist
-  if (formData.linkedin) contactItems.push({ icon: Link2, text: 'LinkedIn', href: formData.linkedin });
-  if (formData.facebook) contactItems.push({ icon: MessageCircle, text: 'Facebook', href: formData.facebook });
-  if (formData.twitter) contactItems.push({ icon: MessageCircle, text: 'Twitter', href: formData.twitter });
-
-
   return (
     <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex shadow-2xl" style={{ backgroundColor: bgLight }}>
       
@@ -769,10 +763,7 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
               { icon: Phone, text: formData.phone || '+00 123 456 789', href: formData.phone ? `tel:${formData.phone}` : null },
               { icon: Mail, text: formData.email || 'email address goes here', href: formData.email ? `mailto:${formData.email}` : null },
               { icon: Globe, text: formData.website || 'website goes here', href: formData.website },
-              { icon: MapPin, text: formData.location || 'address goes here', href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
-              formData.linkedin && { icon: Link2, text: 'LinkedIn', href: formData.linkedin },
-              formData.twitter && { icon: MessageCircle, text: 'Twitter', href: formData.twitter },
-              formData.facebook && { icon: MessageCircle, text: 'Facebook', href: formData.facebook }
+              { icon: MapPin, text: formData.location || 'address goes here', href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null }
             ].filter(Boolean).map((item, idx) => {
               return (
                 <div key={idx} className="flex items-center gap-3">
@@ -905,10 +896,7 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
               { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
               { icon: Mail, text: formData.email, href: formData.email ? `mailto:${formData.email}` : null }, 
               { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
-              { icon: MapPin, text: formData.location || "123 Anywhere St., Any City", href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
-              formData.linkedin && { icon: Link2, text: 'LinkedIn', href: formData.linkedin },
-              formData.twitter && { icon: MessageCircle, text: 'Twitter', href: formData.twitter },
-              formData.facebook && { icon: MessageCircle, text: 'Facebook', href: formData.facebook }
+              { icon: MapPin, text: formData.location || "123 Anywhere St., Any City", href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null }
             ].filter(Boolean).map((contact, i) => {
                return (
                  <div key={i} className="flex items-center gap-3.5">
@@ -948,11 +936,6 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout 
     { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
     { icon: Mail, text: formData.email || "hello@reallygreatsite.com", href: formData.email ? `mailto:${formData.email}` : null },
   ].filter(item => item.text);
-
-  if (formData.linkedin) contactItems.push({ icon: Link2, text: 'LinkedIn', href: formData.linkedin });
-  if (formData.facebook) contactItems.push({ icon: MessageCircle, text: 'Facebook', href: formData.facebook });
-  if (formData.twitter) contactItems.push({ icon: MessageCircle, text: 'Twitter', href: formData.twitter });
-
 
   return (
     <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex bg-white shadow-2xl">
