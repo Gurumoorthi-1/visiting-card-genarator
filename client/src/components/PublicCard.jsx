@@ -18,7 +18,8 @@ const PublicCard = () => {
   useEffect(() => {
     const fetchCard = async () => {
       try {
-        const response = await fetch(`http://10.134.45.21:5000/api/cards/${id}`);
+        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+        const response = await fetch(`${API_BASE_URL}/api/cards/${id}`);
         const data = await response.json();
         if (data.success) {
           setCardData(data.card);

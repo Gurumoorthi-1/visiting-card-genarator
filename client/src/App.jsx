@@ -14,7 +14,7 @@ import { extractColorsFromLogo } from './utils/colorUtils';
 import { useBranding } from './hooks/useBranding';
 import PublicCard from './components/PublicCard';
 
-const API_BASE_URL = 'http://10.134.45.21:5000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
 const initialData = {
   name: '',

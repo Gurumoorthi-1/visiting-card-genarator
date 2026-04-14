@@ -230,7 +230,8 @@ const Sidebar = ({ formData, setFormData, onLogoUpload, logoUrl, setLogoUrl, des
         <button onClick={closeModal} className="px-4 py-2 text-sm font-bold text-slate-500 hover:bg-slate-100 rounded-xl transition-all">Cancel</button>
         <button onClick={async () => {
           try {
-            const res = await fetch(`http://localhost:5000/api/cards/${id}`, {
+            const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+            const res = await fetch(`${API_BASE_URL}/api/cards/${id}`, {
               method: 'DELETE'
             });
             const data = await res.json();
