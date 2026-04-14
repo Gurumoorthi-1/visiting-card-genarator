@@ -547,9 +547,9 @@ const GoldenTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, s
 
 
 
-/* ── 9. VANGUARD (Geometric Pro) ── */
 const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
   const textDark = "#2b2d42";
+  const textSecondary = "#4a4e69";
   const bgLight = "#f4f4f4";
   const iconBg = "#2b2d42";
   const outline = "#1d2d50"; 
