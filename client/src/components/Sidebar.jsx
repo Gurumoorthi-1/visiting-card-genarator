@@ -5,7 +5,6 @@ import {
   MapPin, Link2, MessageCircle, Share2, Upload, X, Palette, LayoutTemplate, Sparkles, Wand2, Cloud, Trash2
 } from 'lucide-react';
 import { PRESETS, TEMPLATES, FONTS } from '../App';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { motion, AnimatePresence } from 'framer-motion';
 import SmartImport from './SmartImport';
 
@@ -26,9 +25,8 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-// Global Gemini Configuration
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
+// Global Groq Configuration (Ultra-fast Llama-3)
+const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 
 // Helper function to provide smart offline taglines if API fails or quota exceeds
 const fallbackMockGenerator = (titleStr) => {
@@ -44,31 +42,54 @@ const fallbackMockGenerator = (titleStr) => {
   }
 };
 
-// Real API Fetch Logic using Gemini
+// Real API Fetch Logic using Groq
 const fetchTaglines = async (jobTitle) => {
   const t = (jobTitle || '').trim();
   if (t.length < 2) return [];
 
-  if (!genAI) {
-    console.warn("No VITE_GEMINI_API_KEY provided in .env. Using mock data.");
+  if (!GROQ_API_KEY) {
+    console.warn("No VITE_GROQ_API_KEY provided in .env. Using mock data.");
     return new Promise((resolve) => setTimeout(() => resolve(fallbackMockGenerator(t)), 800));
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const prompt = `Act as an expert brand strategist. Generate exactly 3 short, punchy, and highly professional personal taglines or catchphrases (maximum 5 words each) for someone whose job title is "${t}". Return ONLY the three taglines separated by a pipe character (|) without numbering or quotation marks.`;
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: "llama3-8b-8192", // Super fast flagship model
+        messages: [
+          {
+            role: "system", 
+            content: "You are an expert brand strategist. Generate exactly 3 short, punchy, and highly professional personal taglines or catchphrases (maximum 5 words each) for the given job title. Return ONLY the three taglines separated by a pipe character (|) without numbering or quotation marks."
+          },
+          {
+            role: "user",
+            content: `Job Title: ${t}`
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 60
+      })
+    });
+
+    const data = await response.json();
     
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
-    
-    // Parse the output
+    if (data.error) {
+      throw new Error(data.error.message);
+    }
+
+    const text = data.choices[0].message.content;
     const suggestions = text.split('|').map(s => s.trim().replace(/^['"]|['"]$/g, '')).filter(Boolean);
+    
     return suggestions.length >= 3 ? suggestions.slice(0, 3) : fallbackMockGenerator(t);
   } catch (error) {
-    console.error("Gemini Generation Error:", error);
+    console.error("Groq Generation Error:", error);
     
-    // Check if Rate Limit / Quota Exceeded (429)
-    if (error.status === 429 || (error.message && (error.message.includes('429') || error.message.includes('quota')))) {
+    if (error.message && (error.message.includes('429') || error.message.includes('quota'))) {
        const mockTags = fallbackMockGenerator(t);
        return [`⚠️ Rate Limited (${mockTags[0]})`, mockTags[1], mockTags[2]];
     }
