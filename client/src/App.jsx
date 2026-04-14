@@ -235,6 +235,17 @@ function Editor() {
     localStorage.setItem('card_form_data', JSON.stringify(formData));
   }, [formData]);
 
+  // Force update to Wave Pro if user has the old midnight default
+  useEffect(() => {
+    if (designParams.bgPrimary === '#0f172a') {
+      setDesignParams(prev => ({
+        ...prev,
+        ...PRESETS.wavePro,
+        fontFamily: FONTS.montserrat.family
+      }));
+    }
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('card_design_params', JSON.stringify(designParams));
   }, [designParams]);
