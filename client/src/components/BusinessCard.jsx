@@ -565,11 +565,17 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
   };
 
   const contactItems = [
-    { icon: Phone, text: formData.phone || "+123-456-7890" },
-    { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
-    { icon: Globe, text: formData.website || "www.reallygreatsite.com" },
-    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" },
+    { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com", href: formData.email ? `mailto:${formData.email}` : null },
+    { icon: Globe, text: formData.website, href: formData.website },
+    { icon: MapPin, text: formData.location, href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
   ];
+
+  // Dynamically add social links if they exist
+  if (formData.linkedin) contactItems.push({ icon: Link2, text: 'LinkedIn', href: formData.linkedin });
+  if (formData.facebook) contactItems.push({ icon: MessageCircle, text: 'Facebook', href: formData.facebook });
+  if (formData.twitter) contactItems.push({ icon: MessageCircle, text: 'Twitter', href: formData.twitter });
+
 
   return (
     <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex shadow-2xl" style={{ backgroundColor: bgLight }}>
@@ -678,6 +684,7 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
                      maxLines={1}
                      className="font-semibold tracking-wide"
                      style={{ color: textSecondary }}
+                     href={contact.href}
                    />
                 </div>
               );
@@ -759,12 +766,14 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
 
           <div className="space-y-3 mt-4">
             {[
-              { icon: Phone, text: formData.phone || '+00 123 456 789' },
-              { icon: Mail, text: formData.email || 'email address goes here' },
-              { icon: Globe, text: formData.website || 'website goes here' },
-              { icon: MapPin, text: formData.location || 'address goes here, your city' }
-            ].map((item, idx) => {
-              const itemUrl = item.icon === Globe ? item.text : null;
+              { icon: Phone, text: formData.phone || '+00 123 456 789', href: formData.phone ? `tel:${formData.phone}` : null },
+              { icon: Mail, text: formData.email || 'email address goes here', href: formData.email ? `mailto:${formData.email}` : null },
+              { icon: Globe, text: formData.website || 'website goes here', href: formData.website },
+              { icon: MapPin, text: formData.location || 'address goes here', href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
+              formData.linkedin && { icon: Link2, text: 'LinkedIn', href: formData.linkedin },
+              formData.twitter && { icon: MessageCircle, text: 'Twitter', href: formData.twitter },
+              formData.facebook && { icon: MessageCircle, text: 'Facebook', href: formData.facebook }
+            ].filter(Boolean).map((item, idx) => {
               return (
                 <div key={idx} className="flex items-center gap-3">
                   <div className="w-[30px] h-[30px] flex items-center justify-center rounded-[10px] shadow-lg" style={{ background: waveIconPill }}>
@@ -775,7 +784,7 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
                     maxWidth={200} 
                     defaultFontSize={11} 
                     className="font-medium text-white tracking-wide" 
-                    href={itemUrl}
+                    href={item.href}
                   />
                 </div>
               );
@@ -892,28 +901,31 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
 
          {/* Contact Section */}
          <div className="flex flex-col gap-3 mb-1 ml-1 relative z-20">
-           {[
-             { icon: Phone, text: formData.phone || "+123-456-7890" },
-             { icon: Mail, text: formData.email }, 
-             { icon: Globe, text: formData.website || "www.reallygreatsite.com" },
-             { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" }
-           ].map((contact, i) => {
-              if(!contact.text) return null;
-              return (
-                <div key={i} className="flex items-center gap-3.5">
-                   <div className="w-[20px] h-[20px] rounded-full flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: iconGold }}>
-                      <contact.icon strokeWidth={2.5} size={11} color="white" />
-                   </div>
-                   <SmartTextField 
-                     text={contact.text} 
-                     maxWidth={260} 
-                     defaultFontSize={11} 
-                     className="font-medium tracking-wide"
-                     style={{ color: textLight }}
-                   />
-                </div>
-              );
-           })}
+            {[
+              { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
+              { icon: Mail, text: formData.email, href: formData.email ? `mailto:${formData.email}` : null }, 
+              { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
+              { icon: MapPin, text: formData.location || "123 Anywhere St., Any City", href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
+              formData.linkedin && { icon: Link2, text: 'LinkedIn', href: formData.linkedin },
+              formData.twitter && { icon: MessageCircle, text: 'Twitter', href: formData.twitter },
+              formData.facebook && { icon: MessageCircle, text: 'Facebook', href: formData.facebook }
+            ].filter(Boolean).map((contact, i) => {
+               return (
+                 <div key={i} className="flex items-center gap-3.5">
+                    <div className="w-[20px] h-[20px] rounded-full flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: iconGold }}>
+                       <contact.icon strokeWidth={2.5} size={11} color="white" />
+                    </div>
+                    <SmartTextField 
+                      text={contact.text} 
+                      maxWidth={260} 
+                      defaultFontSize={11} 
+                      className="font-medium tracking-wide"
+                      style={{ color: textLight }}
+                      href={contact.href}
+                    />
+                 </div>
+               );
+            })}
          </div>
 
       </div>
@@ -931,11 +943,16 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout 
 
   // Contacts mapped exactly to match user's screenshot layout Order: Phone, MapPin, Globe, Mail
   const contactItems = [
-    { icon: Phone, text: formData.phone || "+123-456-7890" },
-    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" },
-    { icon: Globe, text: formData.website || "www.reallygreatsite.com" },
-    { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
-  ];
+    { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
+    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City", href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
+    { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com", href: formData.email ? `mailto:${formData.email}` : null },
+  ].filter(item => item.text);
+
+  if (formData.linkedin) contactItems.push({ icon: Link2, text: 'LinkedIn', href: formData.linkedin });
+  if (formData.facebook) contactItems.push({ icon: MessageCircle, text: 'Facebook', href: formData.facebook });
+  if (formData.twitter) contactItems.push({ icon: MessageCircle, text: 'Twitter', href: formData.twitter });
+
 
   return (
     <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex bg-white shadow-2xl">
@@ -1003,7 +1020,6 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout 
 
          <div className="flex flex-col gap-2.5">
            {contactItems.map((contact, i) => {
-              if(!contact.text) return null;
               return (
                 <div key={i} className="flex items-center gap-3">
                    <contact.icon strokeWidth={2.5} size={14} color="#1a1a1a" className="shrink-0" />
@@ -1013,6 +1029,7 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout 
                      defaultFontSize={10} 
                      className="font-bold tracking-wide uppercase"
                      style={{ color: "#333" }}
+                     href={contact.href}
                    />
                 </div>
               );
