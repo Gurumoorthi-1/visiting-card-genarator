@@ -76,12 +76,17 @@ Output schema (always return all fields, use empty string if not found):
   "email": "Primary email",
   "phone": "Phone number with country code",
   "location": "City, Country",
-  "website": "Personal or company website"
+  "website": "Personal or company website",
+  "linkedin": "Full LinkedIn profile URL",
+  "facebook": "Full Facebook profile URL",
+  "twitter": "Full Twitter/X profile URL"
 }
 
 Important:
 - PDF text often has line-break artifacts — reconstruct sentences intelligently
 - If multiple emails exist, pick the most professional-looking one
+- Map any social media profile URLs found in the text to their respective fields
+- Return full URLs including https:// if possible
 - Map the extracted 'role' to the 'title' field directly
 `;
 
