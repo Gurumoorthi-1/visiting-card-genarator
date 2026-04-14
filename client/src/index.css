@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Mukta:wght@400;700;800&family=Mukta+Malar:wght@400;700;800&family=Noto+Sans:wght@400;700&family=Outfit:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+/* Tailwind v4 import */
+@import "tailwindcss";
+
+/* ── Custom Theme Tokens (Tailwind v4 @theme) ── */
+@theme {
+  --font-family-sans: 'Inter', system-ui, sans-serif;
+  --font-family-display: 'Montserrat', sans-serif;
+  --font-family-roboto: 'Roboto', sans-serif;
+  --font-family-opensans: 'Open Sans', sans-serif;
+  --font-family-montserrat: 'Montserrat', sans-serif;
+
+  --shadow-premium: 0 25px 50px -12px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-card: 0 32px 64px -16px rgba(0,0,0,0.22), 0 0 0 1px rgba(0,0,0,0.04);
+  --shadow-glass: 0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+  --shadow-glow-blue: 0 0 40px rgba(14,165,233,0.3);
+  --shadow-glow-violet: 0 0 40px rgba(139,92,246,0.3);
+  --shadow-glow-rose: 0 0 40px rgba(244,63,94,0.3);
+  --shadow-glow-amber: 0 0 40px rgba(245,158,11,0.3);
+  --shadow-glow-emerald: 0 0 40px rgba(16,185,129,0.3);
+
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.5s linear infinite;
+  --animate-card-float: cardFloat 5s ease-in-out infinite;
+}
+
+/* ── Keyframes ── */
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-8px) rotate(0.3deg); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+/* ── Base Reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+/* ── Utility Classes ── */
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 35%, #faf5ff 65%, #f8fafc 100%);
+}
+
+.dot-grid {
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-color: #f8fafc;
+}
+
+.card-float {
+  animation: cardFloat 5s ease-in-out infinite;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s;
+}
+.input-field::placeholder { color: #cbd5e1; }
+.input-field:hover  { border-color: #cbd5e1; }
+.input-field:focus  { border-color: #7dd3fc; box-shadow: 0 0 0 3px rgba(125,211,252,0.2); }
+
+/* ── Scrollbar ── */
+.custom-scrollbar { scrollbar-width: thin; scrollbar-color: #e2e8f0 transparent; }
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 999px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
