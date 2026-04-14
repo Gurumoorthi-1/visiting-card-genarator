@@ -73,32 +73,20 @@ app.post('/api/cards', async (req, res) => {
       'designParams.template': designParams?.template || '',
     };
 
-    // Check if this exact card already exists
-    const existingCard = await Card.findOne(query).sort({ createdAt: -1 });
+    // Always create a new card entry as requested, allowing duplicates
+    const card = new Card({
+      formData,
+      designParams,
+      logoUrl: logoUrl || '',
+    });
 
-    if (existingCard) {
-      // Update existing card with latest data instead of creating duplicate
-      existingCard.formData = formData;
-      existingCard.designParams = designParams;
-      existingCard.logoUrl = logoUrl;
-      existingCard.createdAt = new Date(); // Update timestamp so it jumps to the top
-      const updatedCard = await existingCard.save();
-      console.log('♻️ Existing card updated (no duplicate created):', updatedCard._id);
-      return res.status(200).json({
-        success: true,
-        message: 'Existing card updated!',
-        card: updatedCard
-      });
-    }
+    const savedCard = await card.save();
+    console.log('✅ New card saved to DB:', savedCard._id);
 
-    // No match found: create new card
-    const newCard = new Card(req.body);
-    const savedCard = await newCard.save();
-    console.log('✅ New card saved:', savedCard._id);
     res.status(201).json({
       success: true,
-      message: 'Card saved successfully to MongoDB!',
-      card: savedCard
+      message: 'Card saved successfully!',
+      card: savedCard,
     });
   } catch (err) {
     console.error('[POST ERROR]', err.message);
