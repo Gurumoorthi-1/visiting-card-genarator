@@ -1092,19 +1092,19 @@ const SkylineTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
 
         {/* Right Side: Logo and Company */}
         <div className="flex flex-col items-center justify-center text-center">
-           <div className={`mb-4 w-36 h-36 rounded-full border-[6px] flex items-center justify-center bg-white shadow-xl`} style={{ borderColor: skyBlue }}>
-              {logoUrl ? <img src={logoUrl} className="w-24 h-24 object-contain" /> : 
+           <div className={`mb-3 w-44 h-44 rounded-full border-[7px] flex items-center justify-center bg-white shadow-xl`} style={{ borderColor: skyBlue }}>
+              {logoUrl ? <img src={logoUrl} className="w-32 h-32 object-contain" /> : 
                 <div className="flex flex-col items-center">
-                   <div className="w-16 h-10 border-4 rounded-t-lg mb-1" style={{ borderColor: skyBlue }} />
-                   <div className="w-20 h-10 border-4" style={{ borderColor: darkBlue }} />
+                   <div className="w-20 h-12 border-4 rounded-t-lg mb-1" style={{ borderColor: skyBlue }} />
+                   <div className="w-24 h-12 border-4" style={{ borderColor: darkBlue }} />
                 </div>
               }
            </div>
            
            <SmartTextField 
              text={formData.company || "RIMBERIO"} 
-             maxWidth={180} 
-             defaultFontSize={20} 
+             maxWidth={200} 
+             defaultFontSize={23} 
              className="font-black tracking-tight text-slate-800 uppercase"
            />
            <SmartTextField 
