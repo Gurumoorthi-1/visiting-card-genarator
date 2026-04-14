@@ -166,8 +166,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Editor />} />
+        {/* Public View Route */}
         <Route path="/card/:id" element={<PublicCard />} />
+        
+        {/* Main Editor Route */}
+        <Route path="/" element={<Editor />} />
       </Routes>
     </Router>
   );
@@ -525,14 +528,7 @@ function Editor() {
   };
 
   return (
-    <Router>
-      <Routes>
-        {/* Public View Route */}
-        <Route path="/card/:id" element={<PublicCard />} />
-        
-        {/* Main Editor Route */}
-        <Route path="/" element={
-          <div className="flex flex-col h-screen overflow-hidden gradient-bg relative" style={{ fontFamily: "'Inter', system-ui, sans-serif", color: '#0f172a' }}>
+    <div className="flex flex-col h-screen overflow-hidden gradient-bg relative" style={{ fontFamily: "'Inter', system-ui, sans-serif", color: '#0f172a' }}>
             <Header 
               onReset={handleReset} 
               onDownloadPNG={handleDownloadPNG} 
@@ -645,10 +641,7 @@ function Editor() {
             >
               {modal.content}
             </Modal>
-          </div>
-        } />
-      </Routes>
-    </Router>
+    </div>
   );
 }
 
