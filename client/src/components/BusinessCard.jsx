@@ -783,14 +783,14 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
           </div>
         </div>
 
-        {/* RIGHT SECTION (White Area) */}
-        <div className="w-[48%] flex flex-col items-center justify-center pl-16 text-center relative transition-all duration-300">
+        {/* RIGHT SECTION (White Area - Adjusted for Batch QR safety) */}
+        <div className="w-[48%] flex flex-col items-center justify-start pt-14 pl-16 text-center relative transition-all duration-300">
           {/* Logo & Company */}
-          <div className="flex flex-col items-center gap-2 mb-4 mr-0">
-             <div className="w-44 h-44 flex items-center justify-center mb-0 drop-shadow-xl">
+          <div className="flex flex-col items-center gap-1.5 mb-2 mr-0">
+             <div className="w-32 h-32 flex items-center justify-center mb-0 drop-shadow-xl">
                 {logoUrl ? <img src={logoUrl} alt="Logo" className="w-full h-full object-contain animate-fade-in" style={{ imageRendering: 'high-quality' }} /> 
                          : (
-                            <div className="relative w-36 h-36 flex items-center justify-center bg-white shadow-2xl rounded-full border border-slate-100 p-5">
+                            <div className="relative w-28 h-28 flex items-center justify-center bg-white shadow-2xl rounded-full border border-slate-100 p-5">
                                <svg viewBox="0 0 100 100" className="w-full h-full">
                                   <polygon points="50 1, 93 25, 93 75, 50 99, 7 75, 7 25" fill="none" stroke={waveMainBlue} strokeWidth="8" />
                                   <polygon points="50 15, 80 33, 80 67, 50 85, 20 67, 20 33" fill={waveLightBlue} />
