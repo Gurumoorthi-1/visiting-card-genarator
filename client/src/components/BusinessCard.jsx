@@ -662,7 +662,7 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
             />
          </div>
 
-         <div className="flex flex-col gap-2">
+         <div className="flex flex-col gap-2" style={{ transform: 'translateY(-1.3px)' }}>
            {contactItems.map((contact, i) => {
               if(!contact.text) return null;
               return (
