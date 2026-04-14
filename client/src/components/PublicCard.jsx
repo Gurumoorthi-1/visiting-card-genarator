@@ -68,12 +68,15 @@ const PublicCard = () => {
       'END:VCARD'
     ].join('\n');
 
-    // Use data URI - works reliably on both Android and iOS
-    const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vcard);
+    const blob = new Blob([vcard], { type: 'text/vcard' });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.href = dataUri;
-    link.download = `${formData.name || 'Contact'}.vcf`;
+    link.href = url;
+    link.setAttribute('download', `${formData.name || 'Contact'}.vcf`);
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   if (loading) {
