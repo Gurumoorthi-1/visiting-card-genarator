@@ -909,7 +909,7 @@ const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, 
 };
 
 /* ── 15. ABSTRACT PRO (Corporate Deep Blue Style) ── */
-const AbstractTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, fontFamily }) => {
+const AbstractTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, fontFamily, bgPrimary, bgSecondary }) => {
   const navy = "#0f172a";
   const blue600 = "#2563eb";
   const blue800 = "#1e40af";
