@@ -741,24 +741,24 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
                />
             </div>
 
-            <div className="flex flex-col items-center justify-center -mt-6 relative z-20 w-[180px]">
-               <div className={`w-36 h-36 flex justify-center items-center mb-0 ${smartLayout.logoScaleClass}`}>
-                  {logoUrl ? <img src={logoUrl} className="max-w-[120px] max-h-[120px] object-contain drop-shadow-md" /> : 
+            <div className="flex flex-col items-end justify-start -mt-2 relative z-20 w-[240px]">
+               <div className={`flex justify-end items-start mb-2 ${smartLayout.logoScaleClass}`}>
+                  {logoUrl ? <img src={logoUrl} className="w-[180px] h-auto max-h-[85px] object-contain drop-shadow-md origin-top-right" /> : 
                      (
-                       <div className="w-24 h-24 rounded-full border border-slate-300 flex items-center justify-center bg-white shadow-sm">
-                          <span className="text-5xl font-black text-slate-400">{initials}</span>
+                       <div className="w-20 h-20 rounded-full border border-slate-300 flex items-center justify-center bg-white shadow-sm">
+                          <span className="text-4xl font-black text-slate-400">{initials}</span>
                        </div>
                      )
                   }
                </div>
                <SmartTextField 
-                 text={formData.company || "Xyzon Innovation Private Limited"} 
-                 maxWidth={180} 
-                 defaultFontSize={16} 
-                 minFontSize={10}
-                 maxLines={3}
-                 className="font-black font-sans tracking-tight uppercase leading-tight"
-                 style={{ color: textDark, textAlign: 'center' }}
+                 text={formData.company || "XYZON INNOVATIONS PRIVATE LIMITED"} 
+                 maxWidth={220} 
+                 defaultFontSize={11} 
+                 minFontSize={8}
+                 maxLines={2}
+                 className="font-black font-sans tracking-wide uppercase leading-tight"
+                 style={{ color: textDark, textAlign: 'right' }}
                />
             </div>
          </div>
