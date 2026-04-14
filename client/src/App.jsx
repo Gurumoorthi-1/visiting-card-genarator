@@ -100,6 +100,13 @@ export const FONTS = {
 
 // Base themes used as presets
 export const PRESETS = {
+  wavePro: {
+    name: 'Wave Pro', emoji: '🌊',
+    bgPrimary: '#073a6e', bgSecondary: '#1c60a3',
+    textPrimary: '#ffffff', textSecondary: '#e0f2fe',
+    accentColor: '#5ba5e0',
+    fontFamily: FONTS.montserrat.family
+  },
   midnight: {
     name: 'Midnight', emoji: '🌌',
     bgPrimary: '#0f172a', bgSecondary: '#1e1b4b',
@@ -153,7 +160,6 @@ export const TEMPLATES = {
   golden: { name: 'Golden Smart', id: 'golden' },
   vanguard: { name: ' Vanguard Pro', id: 'vanguard' },
   wave: { name: 'Wave Pro', id: 'wave' },
-  edge: { name: 'Edge Clean', id: 'edge'},
 };
 
 function App() {
@@ -183,8 +189,8 @@ function Editor() {
     const saved = localStorage.getItem('card_design_params');
     return saved ? JSON.parse(saved) : {
       template: 'modern',
-      ...PRESETS.midnight,
-      fontFamily: FONTS.outfit.family
+      ...PRESETS.wavePro,
+      fontFamily: FONTS.montserrat.family
     };
   });
 
