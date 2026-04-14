@@ -133,9 +133,9 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
         >
           {getTemplate()}
           
-          {/* Inject QR Code firmly on the Front Face TOP Right only during Batch Export to avoid long text overlap */}
+          {/* Inject QR Code firmly on the Front Face - Position varies by template for safety */}
           {isBatchExport && (
-            <div className="absolute top-3 right-3 p-1 bg-white rounded-[6px] shadow-lg border border-slate-100 z-50 flex flex-col items-center gap-0.5">
+            <div className={`absolute ${template === 'wave' ? 'top-3 right-3' : 'bottom-3 right-3'} p-1 bg-white rounded-[6px] shadow-lg border border-slate-100 z-50 flex flex-col items-center gap-0.5`}>
               <QRCodeSVG 
                 value={vCardData || "No Data"} 
                 size={42} 
