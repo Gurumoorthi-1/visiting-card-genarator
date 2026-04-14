@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import BusinessCard from './BusinessCard';
-import { Monitor, Layers, RefreshCw, Box, Smartphone, X as CloseIcon } from 'lucide-react';
+import { Monitor, RefreshCw, Box, X as CloseIcon } from 'lucide-react';
 import { TEMPLATES } from '../App';
 import ARPreview from './ARPreview';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -11,7 +11,7 @@ const TIPS = [
   { icon: '📐', title: 'Print Ready', desc: 'Export at 4× resolution — crisp at any size.' },
 ];
 
-const LivePreview = ({ formData, logoUrl, designParams, onGenerateAR }) => {
+const LivePreview = ({ formData, logoUrl, designParams, onGenerateAR, isPublic }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showAR, setShowAR] = useState(false);
   const [arImage, setArImage] = useState(null);
@@ -81,7 +81,7 @@ const LivePreview = ({ formData, logoUrl, designParams, onGenerateAR }) => {
             className="card-float w-full flex justify-center perspective-[1500px] transform-gpu transition-transform duration-500 origin-center scale-[0.6] sm:scale-[0.8] lg:scale-100"
           >
              <div className="shrink-0">
-                <BusinessCard formData={formData} logoUrl={logoUrl} designParams={designParams} isFlipped={isFlipped} />
+                <BusinessCard formData={formData} logoUrl={logoUrl} designParams={designParams} isFlipped={isFlipped} isPublic={isPublic} />
              </div>
           </div>
 

@@ -377,44 +377,40 @@ function Editor() {
       const shareData = {
         title: shareTitle,
         text: shareText,
-        url: micrositeUrl || window.location.origin
+        url: micrositeUrl || window.location.href
       };
 
-      // 3. SHARE - Optimized for Mobile
+      // 3. SHARE - Robust Mobile Approach (URL first, then File fallback)
       if (navigator.share) {
         try {
-          // Check if file sharing is supported
+          // Check if we can share file
           const canShareFile = navigator.canShare && navigator.canShare({ files: [file] });
           
-          if (canShareFile) {
+          if (canShareFile && /Android|iPhone|iPad/i.test(navigator.userAgent)) {
+            // Mobile devices often prefer file + link together
             await navigator.share({
               ...shareData,
               files: [file]
             });
           } else {
-            // Share link + text only
+            // Just share text and link which is 100% reliable
             await navigator.share(shareData);
           }
-          showToast('Shared successfully!', 'success');
+          showToast('Share menu opened!', 'success');
         } catch (shareErr) {
           if (shareErr.name === 'AbortError') return;
           console.error('Share failed, falling back:', shareErr);
           
-          // Fallback: Copy link and download
+          // Fallback: Copy link
           try {
             await navigator.clipboard.writeText(shareText);
-            showToast('Link copied! Downloading card...', 'success');
+            showToast('Link copied to clipboard!', 'success');
           } catch {
-            showToast('Downloading card...', 'success');
+            showToast('Ready to share!', 'success');
           }
-          
-          const a = document.createElement('a');
-          a.download = 'BusinessCard.jpg';
-          a.href = dataUrl;
-          a.click();
         }
       } else {
-        // Desktop / No Share API
+        // Desktop / No Share API - Download image
         const a = document.createElement('a');
         a.download = 'BusinessCard.jpg';
         a.href = dataUrl;
@@ -584,8 +580,9 @@ function Editor() {
                     <LivePreview 
                       formData={formData} 
                       logoUrl={logoUrl} 
-                      designParams={designParams} 
+                      designParams={TEMPLATES[formData.template] || TEMPLATES.elegant}
                       onGenerateAR={generateCanvas}
+                      isPublic={false}
                     />
                  </div>
               </div>
