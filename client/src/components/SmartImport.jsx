@@ -88,6 +88,7 @@ Important:
 - Map any social media profile URLs found in the text to their respective fields
 - Return full URLs including https:// if possible
 - Map the extracted 'role' to the 'title' field directly
+- IMPORTANT: If the headline or title contains multiple designations separated by pipes (|), slashes (/), or commas (,), pick ONLY ONE (the most relevant or the first one) to keep the visiting card design concise and professional.
 `;
 
   const extractWithAI = async (textPayload, systemInstruction) => {
