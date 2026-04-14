@@ -79,21 +79,12 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
     textPrimary = '#ffffff';
     textSecondary = '#94a3b8';
     accentColor = '#3b82f6';
-  } else if (template === 'wave') {
-    bgPrimary = '#111827';
-    bgSecondary = '#1e293b';
-    textPrimary = '#ffffff';
-    accentColor = '#3b82f6';
-  } else if (template === 'ocean') {
-    bgPrimary = '#1b3a6d';
-    bgSecondary = '#2563eb';
-    textPrimary = '#ffffff';
-    accentColor = '#60a5fa';
   } else if (template === 'skyline') {
-    bgPrimary = '#1b3a6d';
-    bgSecondary = '#2563eb';
+    bgPrimary = '#1e40af';
+    bgSecondary = '#1e3a8a';
     textPrimary = '#ffffff';
-    accentColor = '#facc15';
+    textSecondary = '#cbd5e1';
+    accentColor = '#47a1e0';
   }
 
   const initials = formData.name
@@ -372,12 +363,12 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
 };
 
 /* ── 10. WAVE (Premium Curve) ── */
-const WaveTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, bgPrimary, bgSecondary, accentColor }) => {
+const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, textSecondary, accentColor, bgPrimary, bgSecondary, smartLayout }) => {
   // Corporate Palette
-  const waveMainBlue = bgPrimary || "#073a6e";
-  const waveMedBlue = bgSecondary || "#1c60a3";
-  const waveLightBlue = accentColor || "#5ba5e0";
-  const waveIconPill = bgSecondary || "#0d2645";
+  const waveMainBlue = "#073a6e";
+  const waveMedBlue = "#1c60a3";
+  const waveLightBlue = "#5ba5e0";
+  const waveIconPill = "#0d2645";
 
   return (
     <div className="absolute inset-0 z-10 w-full h-full overflow-hidden bg-white shadow-2xl" 
@@ -707,11 +698,11 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout 
 };
 
 /* ── 13. SKYLINE PRO (Mortgage/Real-Estate Style) ── */
-const SkylineTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, bgPrimary, bgSecondary, accentColor }) => {
-  const skyBlue = bgSecondary || "#47a1e0";
-  const darkBlue = bgPrimary || "#1b3a6d";
+const SkylineTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
+  const skyBlue = "#47a1e0";
+  const darkBlue = "#1e40af";
   const textDark = "#374151";
-  const textAccent = accentColor || "#2563eb";
+  const textAccent = "#2563eb";
 
   const contactItems = [
     { icon: Phone, text: formData.phone || "+123 456 7890" },
@@ -811,10 +802,10 @@ const SkylineTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
 };
 
 /* ── 14. OCEAN PRO (Marble & Swish Style) ── */
-const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, fontFamily, bgPrimary, bgSecondary, accentColor }) => {
-  const navy = bgPrimary || "#1b3a6d";
-  const royal = bgSecondary || "#2563eb";
-  const lightBlue = accentColor || "#60a5fa";
+const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, fontFamily }) => {
+  const navy = "#1b3a6d";
+  const royal = "#2563eb";
+  const lightBlue = "#60a5fa";
 
   const contactItems = [
     { icon: Phone, text: formData.phone || "+123-456-7890" },
