@@ -377,31 +377,43 @@ function Editor() {
       const shareData = {
         title: shareTitle,
         text: shareText,
-        url: micrositeUrl || window.location.href
+        url: micrositeUrl || window.location.origin
       };
 
-      // 3. SHARE - Robust Mobile Approach (URL first, then File fallback)
+      // 3. SHARE - Robust implementation for Mobile
       if (navigator.share) {
         try {
-          // Check if we can share file
+          // Attempt 1: Try sharing as a file (if supported)
           const canShareFile = navigator.canShare && navigator.canShare({ files: [file] });
-          
-          if (canShareFile && /Android|iPhone|iPad/i.test(navigator.userAgent)) {
-            // Mobile devices often prefer file + link together
-            await navigator.share({
-              ...shareData,
-              files: [file]
-            });
-          } else {
-            // Just share text and link which is 100% reliable
-            await navigator.share(shareData);
+          if (canShareFile) {
+            try {
+              await navigator.share({ ...shareData, files: [file] });
+              showToast('Shared successfully!', 'success');
+              return;
+            } catch (fErr) {
+              console.warn('File share failed, trying text...', fErr);
+            }
           }
-          showToast('Share menu opened!', 'success');
+
+          // Attempt 2: Try sharing text/link only (more widely supported)
+          await navigator.share(shareData);
+          showToast('Shared successfully!', 'success');
         } catch (shareErr) {
           if (shareErr.name === 'AbortError') return;
-          console.error('Share failed, falling back:', shareErr);
           
-          // Fallback: Copy link
+          // Attempt 3: WhatsApp direct fallback
+          const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+          window.open(whatsappUrl, '_blank');
+          showToast('Opening WhatsApp share...', 'success');
+        }
+      } else {
+        // Desktop / No Share API - WhatsApp Fallback + Download
+        try {
+          const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+          window.open(whatsappUrl, '_blank');
+          showToast('Opening WhatsApp share...', 'success');
+        } catch {
+          // Final fallback: copy link
           try {
             await navigator.clipboard.writeText(shareText);
             showToast('Link copied to clipboard!', 'success');
@@ -409,19 +421,12 @@ function Editor() {
             showToast('Ready to share!', 'success');
           }
         }
-      } else {
-        // Desktop / No Share API - Download image
+        
+        // Also download image as it's the primary export
         const a = document.createElement('a');
         a.download = 'BusinessCard.jpg';
         a.href = dataUrl;
         a.click();
-        
-        try {
-          await navigator.clipboard.writeText(shareText);
-          showToast('Image downloaded! Link copied to clipboard.', 'success');
-        } catch {
-          showToast('Image downloaded!', 'success');
-        }
       }
     } catch (err) {
       console.error('Share failed:', err);
@@ -580,9 +585,8 @@ function Editor() {
                     <LivePreview 
                       formData={formData} 
                       logoUrl={logoUrl} 
-                      designParams={TEMPLATES[formData.template] || TEMPLATES.elegant}
+                      designParams={designParams} 
                       onGenerateAR={generateCanvas}
-                      isPublic={false}
                     />
                  </div>
               </div>

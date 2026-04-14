@@ -155,7 +155,6 @@ const PublicCard = () => {
                 logoUrl={logoUrl}
                 isFlipped={isFlipped}
                 isBatchExport={false}
-                isPublic={true}
               />
            </div>
         </motion.div>

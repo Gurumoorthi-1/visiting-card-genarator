@@ -45,7 +45,7 @@ const getSmartLayout = (nameStr) => {
   }
 };
 
-const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExport = false, isPublic = false }) => {
+const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExport = false }) => {
 
   const { name, title, company, phone, email, website, location, linkedin, twitter, facebook, tagline } = formData;
 
@@ -204,7 +204,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
 
 
 /* ── 1. MODERN (Existing) ── */
-const ModernTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor, bgPrimary, isPublic }) => (
+const ModernTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor, bgPrimary }) => (
   <>
     <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full bg-white/5 blur-3xl mix-blend-overlay pointer-events-none" />
     <div className="absolute -bottom-12 -left-12 w-40 h-40 rounded-full bg-white/5 blur-2xl mix-blend-overlay pointer-events-none" />
@@ -247,12 +247,12 @@ const ModernTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, s
 
       <div className="flex items-end justify-between gap-4 pointer-events-auto">
         <div className="grid grid-cols-1 gap-1.5 flex-1">
-          {formData.phone && <ContactRow icon={Phone} text={formData.phone} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
-          {formData.email && <ContactRow icon={Mail} text={formData.email} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
-          {formData.website && <ContactRow icon={Globe} text={formData.website} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
-          {formData.location && <ContactRow icon={MapPin} text={formData.location} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
+          {formData.phone && <ContactRow icon={Phone} text={formData.phone} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
+          {formData.email && <ContactRow icon={Mail} text={formData.email} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
+          {formData.website && <ContactRow icon={Globe} text={formData.website} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
+          {formData.location && <ContactRow icon={MapPin} text={formData.location} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
         </div>
-        {hasSocial && isPublic && (
+        {hasSocial && (
           <div className="flex items-center gap-2.5 shrink-0">
             {formData.linkedin && <SocialDot icon={Link2} aC={accentColor} tP={textPrimary} href={formData.linkedin} />}
             {formData.twitter && <SocialDot icon={MessageCircle} aC={accentColor} tP={textPrimary} href={formData.twitter} />}
@@ -265,7 +265,7 @@ const ModernTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, s
 );
 
 /* ── 2. CLASSIC (Centered Layout) ── */
-const ClassicTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor, isPublic }) => (
+const ClassicTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor }) => (
   <div className="absolute inset-0 flex flex-col items-center justify-between p-8 text-center ring-4 ring-white/5 m-2 rounded-xl z-10 w-full overflow-hidden">
     <div className="flex flex-col items-center gap-3 w-full max-w-[440px]">
       <div className={`w-16 h-16 rounded-full overflow-hidden flex items-center justify-center border-[3px] shadow-2xl mx-auto shrink-0 transition-all duration-500 hover:rotate-6 ${smartLayout.logoScaleClass}`} style={{ borderColor: accentColor, background: `${accentColor}1A` }}>
@@ -304,7 +304,7 @@ const ClassicTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, 
       {formData.phone && <span style={{ color: textSecondary }}>{formData.phone}</span>}
       {formData.email && <span style={{ color: textSecondary }}>{formData.email}</span>}
       {formData.website && (
-        <a href={isPublic ? (formData.website.startsWith('http') ? formData.website : `https://${formData.website}`) : '#'} target="_blank" rel="noopener noreferrer" className={`${isPublic ? 'hover:opacity-60' : 'cursor-default'} transition-opacity`} style={{ color: textSecondary }} onClick={e => !isPublic && e.preventDefault()}>
+        <a href={formData.website.startsWith('http') ? formData.website : `https://${formData.website}`} target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity" style={{ color: textSecondary }} onClick={e => e.stopPropagation()}>
           {formData.website}
         </a>
       )}
@@ -314,7 +314,7 @@ const ClassicTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, 
 
 
 /* ── 3. CREATIVE (Split Layout) ── */
-const CreativeTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor, bgPrimary, isPublic }) => (
+const CreativeTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor, bgPrimary }) => (
   <div className="absolute inset-0 flex z-10 w-full overflow-hidden">
     <div className="w-[35%] flex flex-col items-center justify-center p-6 text-center shadow-[4px_0_24px_rgba(0,0,0,0.2)] z-10 shrink-0" style={{ background: accentColor }}>
       <div className={`w-20 h-20 rounded-2xl overflow-hidden flex items-center justify-center bg-white/20 ring-4 ring-white/10 backdrop-blur-md mb-4 shadow-2xl transition-all duration-500 hover:scale-110 ${smartLayout.logoScaleClass}`}>
@@ -340,16 +340,16 @@ const CreativeTemplate = ({ name, title, formData, initials, hasSocial, logoUrl,
       </div>
       
       <div className="space-y-2.5 max-w-[280px]">
-        {formData.phone && <ContactRow icon={Phone} text={formData.phone} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
-        {formData.email && <ContactRow icon={Mail} text={formData.email} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
-        {formData.website && <ContactRow icon={Globe} text={formData.website} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
+        {formData.phone && <ContactRow icon={Phone} text={formData.phone} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
+        {formData.email && <ContactRow icon={Mail} text={formData.email} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
+        {formData.website && <ContactRow icon={Globe} text={formData.website} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
       </div>
     </div>
   </div>
 );
 
 /* ── 4. MINIMAL (Clean Layout) ── */
-const MinimalTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor, isPublic }) => (
+const MinimalTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor }) => (
   <div className="absolute inset-0 p-10 flex flex-col justify-between z-10 w-full overflow-hidden">
     <div className="flex justify-between items-start w-full gap-4">
       <div className="flex-1 w-[280px]">
@@ -371,10 +371,10 @@ const MinimalTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, 
     <div className="flex justify-between items-end w-full gap-4">
       <div className="space-y-1 w-[260px]">
         {formData.email && <SmartTextField text={formData.email} maxWidth={260} defaultFontSize={10} minFontSize={7} className="font-medium lowercase tracking-wide" style={{ color: textSecondary }} />}
-        {formData.website && <SmartTextField text={formData.website} maxWidth={260} defaultFontSize={10} minFontSize={7} className="font-medium lowercase tracking-wide" style={{ color: textSecondary }} href={isPublic ? formData.website : null} />}
+        {formData.website && <SmartTextField text={formData.website} maxWidth={260} defaultFontSize={10} minFontSize={7} className="font-medium lowercase tracking-wide" style={{ color: textSecondary }} href={formData.website} />}
         {formData.phone && <SmartTextField text={formData.phone} maxWidth={260} defaultFontSize={10} minFontSize={7} className="font-medium lowercase tracking-wide" style={{ color: textSecondary }} />}
       </div>
-      {(formData.linkedin || formData.twitter) && isPublic && (
+      {(formData.linkedin || formData.twitter) && (
         <div className="text-[9px] font-medium text-right lowercase tracking-wide opacity-50 max-w-[150px]" style={{ color: textPrimary }}>
           {formData.linkedin && (
              <a href={formData.linkedin.startsWith('http') ? formData.linkedin : `https://${formData.linkedin}`} target="_blank" rel="noopener noreferrer" className="hover:opacity-100 truncate block pointer-events-auto" onClick={e => e.stopPropagation()}>
@@ -389,7 +389,7 @@ const MinimalTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, 
 );
 
 /* ── 5. CORPORATE (Horizontal Split) ── */
-const CorporateTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor, isPublic }) => (
+const CorporateTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor }) => (
   <div className="absolute inset-0 flex flex-col z-10 w-full overflow-hidden">
     <div className="h-2 w-full shrink-0" style={{ background: accentColor }} />
     <div className="flex-1 p-8 flex justify-between items-center relative gap-8">
@@ -411,17 +411,17 @@ const CorporateTemplate = ({ name, title, formData, initials, hasSocial, logoUrl
       </div>
       
       <div className="w-[45%] pl-4 space-y-3 max-w-[240px]">
-        {formData.phone && <ContactRow icon={Phone} text={formData.phone} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
-        {formData.email && <ContactRow icon={Mail} text={formData.email} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
-        {formData.website && <ContactRow icon={Globe} text={formData.website} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
-        {formData.location && <ContactRow icon={MapPin} text={formData.location} tP={textPrimary} tS={textSecondary} aC={accentColor} isPublic={isPublic} />}
+        {formData.phone && <ContactRow icon={Phone} text={formData.phone} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
+        {formData.email && <ContactRow icon={Mail} text={formData.email} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
+        {formData.website && <ContactRow icon={Globe} text={formData.website} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
+        {formData.location && <ContactRow icon={MapPin} text={formData.location} tP={textPrimary} tS={textSecondary} aC={accentColor} />}
       </div>
     </div>
   </div>
 );
 
 /* ── Helpers ── */
-const ContactRow = ({ icon: Icon, text, tP, tS, aC, maxW = 200, isPublic }) => {
+const ContactRow = ({ icon: Icon, text, tP, tS, aC, maxW = 200 }) => {
   const isUrl = Icon === Globe;
   return (
     <div className="flex items-center gap-2.5">
@@ -434,7 +434,7 @@ const ContactRow = ({ icon: Icon, text, tP, tS, aC, maxW = 200, isPublic }) => {
         maxLines={1} 
         className="font-semibold tracking-wide" 
         style={{ color: tS || tP }} 
-        href={isUrl && isPublic ? text : null}
+        href={isUrl ? text : null}
       />
     </div>
   );
@@ -454,7 +454,7 @@ const SocialDot = ({ icon: Icon, aC, tP, href }) => (
 );
 
 /* ── 6. GOLDEN RATIO (Dynamic Format Engine) ── */
-const GoldenTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor, isPublic }) => {
+const GoldenTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, smartLayout, textPrimary, textSecondary, accentColor }) => {
   const [logoFormat, setLogoFormat] = React.useState('square');
   const [isLoaded, setIsLoaded] = React.useState(false);
 
@@ -501,10 +501,10 @@ const GoldenTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, s
           </div>
           
           <div className="space-y-2.5 w-full">
-            {formData.phone && <ContactRow icon={Phone} text={formData.phone} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={240} isPublic={isPublic} />}
-            {formData.email && <ContactRow icon={Mail} text={formData.email} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={240} isPublic={isPublic} />}
-            {formData.website && <ContactRow icon={Globe} text={formData.website} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={240} isPublic={isPublic} />}
-            {formData.location && <ContactRow icon={MapPin} text={formData.location} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={240} isPublic={isPublic} />}
+            {formData.phone && <ContactRow icon={Phone} text={formData.phone} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={240} />}
+            {formData.email && <ContactRow icon={Mail} text={formData.email} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={240} />}
+            {formData.website && <ContactRow icon={Globe} text={formData.website} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={240} />}
+            {formData.location && <ContactRow icon={MapPin} text={formData.location} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={240} />}
           </div>
         </div>
       </div>
@@ -534,7 +534,7 @@ const GoldenTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, s
         {formData.phone && <div className="flex items-center gap-1.5"><Phone strokeWidth={2} className="w-3 h-3 shrink-0" style={{ color: accentColor }} /><span className="text-[10px] font-semibold tracking-wide" style={{ color: textSecondary }}>{formData.phone}</span></div>}
         {formData.email && <div className="flex items-center gap-1.5"><Mail strokeWidth={2} className="w-3 h-3 shrink-0" style={{ color: accentColor }} /><span className="text-[10px] font-semibold tracking-wide" style={{ color: textSecondary }}>{formData.email}</span></div>}
         {formData.website && (
-           <a href={isPublic ? (formData.website.startsWith('http') ? formData.website : `https://${formData.website}`) : '#'} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 group pointer-events-auto" onClick={e => !isPublic && e.preventDefault()}>
+           <a href={formData.website.startsWith('http') ? formData.website : `https://${formData.website}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 group pointer-events-auto" onClick={e => e.stopPropagation()}>
              <Globe strokeWidth={2} className="w-3 h-3 shrink-0 group-hover:scale-110 transition-transform" style={{ color: accentColor }} />
              <span className="text-[10px] font-semibold tracking-wide pointer-events-none" style={{ color: textSecondary }}>{formData.website}</span>
            </a>
@@ -547,7 +547,7 @@ const GoldenTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, s
 
 
 
-const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, isPublic }) => {
+const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
   const textDark = "#2b2d42";
   const textSecondary = "#4a4e69";
   const bgLight = "#f4f4f4";
@@ -565,17 +565,11 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
   };
 
   const contactItems = [
-    { icon: Phone, text: formData.phone, href: isPublic && formData.phone ? `tel:${formData.phone}` : null },
-    { icon: Mail, text: formData.email, href: isPublic && formData.email ? `mailto:${formData.email}` : null },
-    { icon: Globe, text: formData.website, href: formData.website }, // Website ALWAYS works
-    { icon: MapPin, text: formData.location, href: isPublic && formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
-  ].filter(i => i.text);
-
-  if (isPublic) {
-    if (formData.linkedin) contactItems.push({ icon: Link2, text: 'LinkedIn', href: formData.linkedin });
-    if (formData.facebook) contactItems.push({ icon: MessageCircle, text: 'Facebook', href: formData.facebook });
-    if (formData.twitter) contactItems.push({ icon: MessageCircle, text: 'Twitter', href: formData.twitter });
-  }
+    { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com", href: formData.email ? `mailto:${formData.email}` : null },
+    { icon: Globe, text: formData.website, href: formData.website },
+    { icon: MapPin, text: formData.location, href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
+  ];
 
   return (
     <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex shadow-2xl" style={{ backgroundColor: bgLight }}>
@@ -697,7 +691,7 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
 };
 
 /* ── 10. WAVE (Premium Curve) ── */
-const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, textSecondary, accentColor, bgPrimary, bgSecondary, smartLayout, isPublic }) => {
+const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, textSecondary, accentColor, bgPrimary, bgSecondary, smartLayout }) => {
   // Corporate Palette
   const waveMainBlue = "#073a6e";
   const waveMedBlue = "#1c60a3";
@@ -766,13 +760,10 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
 
           <div className="space-y-3 mt-4">
             {[
-              { icon: Phone, text: formData.phone, href: isPublic && formData.phone ? `tel:${formData.phone}` : null },
-              { icon: Mail, text: formData.email, href: isPublic && formData.email ? `mailto:${formData.email}` : null },
-              { icon: Globe, text: formData.website, href: formData.website }, // Always redirect
-              { icon: MapPin, text: formData.location, href: isPublic && formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
-              isPublic && formData.linkedin && { icon: Link2, text: 'LinkedIn', href: formData.linkedin },
-              isPublic && formData.twitter && { icon: MessageCircle, text: 'Twitter', href: formData.twitter },
-              isPublic && formData.facebook && { icon: MessageCircle, text: 'Facebook', href: formData.facebook }
+              { icon: Phone, text: formData.phone || '+00 123 456 789', href: formData.phone ? `tel:${formData.phone}` : null },
+              { icon: Mail, text: formData.email || 'email address goes here', href: formData.email ? `mailto:${formData.email}` : null },
+              { icon: Globe, text: formData.website || 'website goes here', href: formData.website },
+              { icon: MapPin, text: formData.location || 'address goes here', href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null }
             ].filter(Boolean).map((item, idx) => {
               return (
                 <div key={idx} className="flex items-center gap-3">
@@ -827,7 +818,7 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
 };
 
 /* ── 11. ELEGANT (Mimics User Card) ── */
-const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, isPublic }) => {
+const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
   const navy = "#1f223a";
   const gold = "#d4af37";
   const textDark = "#353443";
@@ -902,13 +893,10 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
          {/* Contact Section */}
          <div className="flex flex-col gap-3 mb-1 ml-1 relative z-20">
             {[
-              { icon: Phone, text: formData.phone, href: isPublic && formData.phone ? `tel:${formData.phone}` : null },
-              { icon: Mail, text: formData.email, href: isPublic && formData.email ? `mailto:${formData.email}` : null }, 
-              { icon: Globe, text: formData.website, href: formData.website }, // Always
-              { icon: MapPin, text: formData.location, href: isPublic && formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
-              isPublic && formData.linkedin && { icon: Link2, text: 'LinkedIn', href: formData.linkedin },
-              isPublic && formData.twitter && { icon: MessageCircle, text: 'Twitter', href: formData.twitter },
-              isPublic && formData.facebook && { icon: MessageCircle, text: 'Facebook', href: formData.facebook }
+              { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
+              { icon: Mail, text: formData.email, href: formData.email ? `mailto:${formData.email}` : null }, 
+              { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
+              { icon: MapPin, text: formData.location || "123 Anywhere St., Any City", href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null }
             ].filter(Boolean).map((contact, i) => {
                return (
                  <div key={i} className="flex items-center gap-3.5">
@@ -934,7 +922,7 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
 };
 
 /* ── 12. STUDIO (Dark/Light Split) ── */
-const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, isPublic }) => {
+const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
   const darkBg = "#161618";
   const lightBg = "#f0f0f0";
   const textDark = "#1a1a1a";
@@ -943,17 +931,11 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout,
 
   // Contacts mapped exactly to match user's screenshot layout Order: Phone, MapPin, Globe, Mail
   const contactItems = [
-    { icon: Phone, text: formData.phone, href: isPublic && formData.phone ? `tel:${formData.phone}` : null },
-    { icon: MapPin, text: formData.location, href: isPublic && formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
-    { icon: Globe, text: formData.website, href: formData.website }, // Always
-    { icon: Mail, text: formData.email, href: isPublic && formData.email ? `mailto:${formData.email}` : null },
+    { icon: Phone, text: formData.phone || "+123-456-7890", href: formData.phone ? `tel:${formData.phone}` : null },
+    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City", href: formData.location ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.location)}` : null },
+    { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com", href: formData.email ? `mailto:${formData.email}` : null },
   ].filter(item => item.text);
-
-  if (isPublic) {
-    if (formData.linkedin) contactItems.push({ icon: Link2, text: 'LinkedIn', href: formData.linkedin });
-    if (formData.facebook) contactItems.push({ icon: MessageCircle, text: 'Facebook', href: formData.facebook });
-    if (formData.twitter) contactItems.push({ icon: MessageCircle, text: 'Twitter', href: formData.twitter });
-  }
 
   return (
     <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex bg-white shadow-2xl">
