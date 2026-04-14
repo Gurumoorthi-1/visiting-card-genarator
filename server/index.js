@@ -81,6 +81,7 @@ app.post('/api/cards', async (req, res) => {
       existingCard.formData = formData;
       existingCard.designParams = designParams;
       existingCard.logoUrl = logoUrl;
+      existingCard.createdAt = new Date(); // Update timestamp so it jumps to the top
       const updatedCard = await existingCard.save();
       console.log('♻️ Existing card updated (no duplicate created):', updatedCard._id);
       return res.status(200).json({

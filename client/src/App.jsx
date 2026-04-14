@@ -219,7 +219,7 @@ function Editor() {
     try {
       const res = await fetch(`${API_BASE_URL}/api/cards`);
       const data = await res.json();
-      if (data.success) setSavedCards(data.cards.slice(0, 5));
+      if (data.success) setSavedCards(data.cards.slice(0, 50));
     } catch (err) {
       console.error("Fetch saved cards error:", err);
     }
