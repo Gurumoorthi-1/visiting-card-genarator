@@ -103,6 +103,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
       case 'wave': return <WaveTemplate {...commonProps} />;
       case 'elegant': return <ElegantTemplate {...commonProps} />;
       case 'studio': return <StudioTemplate {...commonProps} />;
+      case 'skyline': return <SkylineTemplate {...commonProps} />;
       case 'modern':
       default: return <ModernTemplate {...commonProps} />;
     }
@@ -1019,6 +1020,110 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout 
            })}
          </div>
 
+      </div>
+
+    </div>
+  );
+};
+
+/* ── 13. SKYLINE PRO (Mortgage/Real-Estate Style) ── */
+const SkylineTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
+  const skyBlue = "#47a1e0";
+  const darkBlue = "#1e40af";
+  const textDark = "#374151";
+  const textAccent = "#2563eb";
+
+  const contactItems = [
+    { icon: Phone, text: formData.phone || "+123 456 7890" },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
+    { icon: Globe, text: formData.website || "ww.reallygreatsite.com", href: formData.website },
+    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City, ST 12345" },
+  ].filter(item => item.text);
+
+  return (
+    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden bg-white flex flex-col justify-between">
+      
+      {/* Top Header Patterns */}
+      <div className="relative w-full h-[45px] shrink-0">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 540 45" preserveAspectRatio="none">
+          <path d="M 0 0 L 270 0 Q 230 45 180 45 L 0 45 Z" fill={skyBlue} />
+          <path d="M 180 0 L 540 0 L 540 12 Q 350 12 280 45 L 200 45 Q 240 0 180 0" fill={darkBlue} />
+        </svg>
+        <div className="absolute top-0 left-0 w-full h-[3px]" style={{ background: skyBlue, opacity: 0.5 }} />
+      </div>
+
+      <div className="flex-1 flex px-10 items-center justify-between">
+        
+        {/* Left Side: Name and Contacts */}
+        <div className="flex flex-col justify-center max-w-[55%]">
+           <div className="mb-6">
+              <SmartTextField 
+                text={name || "ALEXANDER ARONOWITZ"} 
+                maxWidth={300} 
+                defaultFontSize={28} 
+                className="font-black text-slate-700 tracking-tight uppercase"
+              />
+              <SmartTextField 
+                text={title || "HEAD MANAGER"} 
+                maxWidth={300} 
+                defaultFontSize={16} 
+                className="font-bold tracking-widest uppercase mt-0.5"
+                style={{ color: textAccent }}
+              />
+           </div>
+
+           <div className="flex flex-col gap-2.5">
+             {contactItems.map((contact, i) => (
+               <div key={i} className="flex items-center gap-3">
+                 <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: textAccent }}>
+                   <contact.icon size={11} color="white" />
+                 </div>
+                 <SmartTextField 
+                   text={contact.text} 
+                   maxWidth={220} 
+                   defaultFontSize={10} 
+                   className="font-bold tracking-tight text-slate-600"
+                   href={contact.href}
+                 />
+               </div>
+             ))}
+           </div>
+        </div>
+
+        {/* Right Side: Logo and Company */}
+        <div className="flex flex-col items-center justify-center text-center">
+           <div className={`mb-4 w-36 h-36 rounded-full border-[6px] flex items-center justify-center bg-white shadow-xl`} style={{ borderColor: skyBlue }}>
+              {logoUrl ? <img src={logoUrl} className="w-24 h-24 object-contain" /> : 
+                <div className="flex flex-col items-center">
+                   <div className="w-16 h-10 border-4 rounded-t-lg mb-1" style={{ borderColor: skyBlue }} />
+                   <div className="w-20 h-10 border-4" style={{ borderColor: darkBlue }} />
+                </div>
+              }
+           </div>
+           
+           <SmartTextField 
+             text={formData.company || "RIMBERIO"} 
+             maxWidth={180} 
+             defaultFontSize={20} 
+             className="font-black tracking-tight text-slate-800 uppercase"
+           />
+           <SmartTextField 
+             text={formData.tagline || "REAL ESTATE"} 
+             maxWidth={180} 
+             defaultFontSize={10} 
+             className="font-bold tracking-[0.2em] uppercase mt-0.5"
+             style={{ color: textAccent }}
+           />
+        </div>
+      </div>
+
+      {/* Bottom Footer Patterns */}
+      <div className="relative w-full h-[45px] shrink-0">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 540 45" preserveAspectRatio="none">
+           <path d="M 0 0 L 120 0 Q 180 45 320 45 L 0 45 Z" fill={darkBlue} />
+           <path d="M 280 45 L 540 45 L 540 0 Q 400 0 240 45" fill={skyBlue} />
+        </svg>
+        <div className="absolute bottom-0 left-0 w-full h-[3px]" style={{ background: darkBlue, opacity: 0.5 }} />
       </div>
 
     </div>

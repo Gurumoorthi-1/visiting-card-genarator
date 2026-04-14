@@ -20,7 +20,8 @@ const TEMPLATE_OPTIONS = [
   { id: 'vanguard', name: 'Vanguard Pro Template' },
   { id: 'wave', name: 'Wave Pro Template' },
   { id: 'elegant', name: 'Elegant Pro Template' },
-  { id: 'studio', name: 'Studio Pro Template' }
+  { id: 'studio', name: 'Studio Pro Template' },
+  { id: 'skyline', name: 'Skyline Pro Template' }
 ];
 
 const REQUIRED_FIELDS = [

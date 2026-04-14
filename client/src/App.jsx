@@ -162,6 +162,7 @@ export const TEMPLATES = {
   wave: { name: 'Wave Pro', id: 'wave' },
   elegant: { name: 'Elegant Pro', id: 'elegant' },
   studio: { name: 'Studio Pro', id: 'studio' },
+  skyline: { name: 'Skyline Pro', id: 'skyline' },
 };
 
 function App() {
