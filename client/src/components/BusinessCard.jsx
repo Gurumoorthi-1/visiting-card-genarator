@@ -76,7 +76,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
 
   const smartLayout = getSmartLayout(name);
 
-  const qrFgColor = (isElegant || isStudio) ? textPrimary : bgSecondary;
+  const qrFgColor = isElegant ? textPrimary : (isStudio ? bgPrimary : bgSecondary);
 
 
   const commonProps = {
@@ -877,15 +877,18 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout 
          <div className="mb-8 mt-4">
             <SmartTextField 
               text={name || "MORGAN MAXWELL"} 
-              maxWidth={300} 
+              maxWidth={250} 
               defaultFontSize={22} 
+              minFontSize={10}
+              maxLines={2}
               className={`font-black tracking-widest uppercase leading-tight ${smartLayout.nameTracking}`}
               style={{ color: textDark, fontFamily: "'Inter', sans-serif" }}
             />
             <SmartTextField 
               text={title || "COMPUTER MECHANIC"} 
-              maxWidth={300} 
+              maxWidth={250} 
               defaultFontSize={11} 
+              minFontSize={7}
               className="font-bold tracking-[0.2em] uppercase mt-0.5"
               style={{ color: "#4a4a4a", fontFamily: "'Inter', sans-serif" }}
             />
