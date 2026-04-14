@@ -16,7 +16,11 @@ const TEMPLATE_OPTIONS = [
   { id: 'minimal', name: 'Minimal Template' },
   { id: 'creative', name: 'Creative Template' },
   { id: 'corporate', name: 'Corporate Template' },
-  { id: 'golden', name: 'Golden Smart Template' }
+  { id: 'golden', name: 'Golden Smart Template' },
+  { id: 'vanguard', name: 'Vanguard Pro Template' },
+  { id: 'wave', name: 'Wave Pro Template' },
+  { id: 'elegant', name: 'Elegant Pro Template' },
+  { id: 'studio', name: 'Studio Pro Template' }
 ];
 
 const REQUIRED_FIELDS = [
