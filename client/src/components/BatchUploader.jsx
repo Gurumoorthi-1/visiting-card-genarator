@@ -11,12 +11,6 @@ import BusinessCard from './BusinessCard';
 import { PRESETS } from '../App';
 
 const TEMPLATE_OPTIONS = [
-  { id: 'modern', name: 'Modern Template' },
-  { id: 'classic', name: 'Classic Template' },
-  { id: 'minimal', name: 'Minimal Template' },
-  { id: 'creative', name: 'Creative Template' },
-  { id: 'corporate', name: 'Corporate Template' },
-  { id: 'golden', name: 'Golden Smart Template' },
   { id: 'vanguard', name: 'Vanguard Pro Template' },
   { id: 'wave', name: 'Wave Pro Template' },
   { id: 'elegant', name: 'Elegant Pro Template' },

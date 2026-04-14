@@ -152,13 +152,7 @@ export const PRESETS = {
 };
 
 export const TEMPLATES = {
-  modern: { name: 'Modern', id: 'modern' },
-  classic: { name: 'Classic', id: 'classic' },
-  creative: { name: 'Creative', id: 'creative' },
-  minimal: { name: 'Minimal', id: 'minimal' },
-  corporate: { name: 'Corporate', id: 'corporate' },
-  golden: { name: 'Golden Smart', id: 'golden' },
-  vanguard: { name: ' Vanguard Pro', id: 'vanguard' },
+  vanguard: { name: 'Vanguard Pro', id: 'vanguard' },
   wave: { name: 'Wave Pro', id: 'wave' },
   elegant: { name: 'Elegant Pro', id: 'elegant' },
   studio: { name: 'Studio Pro', id: 'studio' },
