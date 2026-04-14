@@ -617,8 +617,8 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
          </g>
       </svg>
 
-      {/* Content (Shifted slightly up with justify-start + pt) */}
-      <div className="relative z-10 w-[70%] h-full flex flex-col justify-start px-10 pt-14 pb-8">
+      {/* Content (Optimized padding to show all contacts) */}
+      <div className="relative z-10 w-[70%] h-full flex flex-col justify-center px-10 pt-8 pb-4">
          <div className="mb-5 mt-2 relative">
             
             {/* Company Info row */}
@@ -662,18 +662,18 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
             />
          </div>
 
-         <div className="flex flex-col gap-3">
+         <div className="flex flex-col gap-2.5">
            {contactItems.map((contact, i) => {
               if(!contact.text) return null;
               return (
-                <div key={i} className="flex items-center gap-3.5">
-                   <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: iconBg }}>
-                      <contact.icon strokeWidth={2.5} size={12} color="#f4f4f4" />
+                <div key={i} className="flex items-center gap-2.5">
+                   <div className="w-5.5 h-5.5 rounded-full flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: iconBg }}>
+                      <contact.icon strokeWidth={2.5} size={11} color="#f4f4f4" />
                    </div>
                    <SmartTextField 
                      text={contact.text} 
-                     maxWidth={250} 
-                     defaultFontSize={11} 
+                     maxWidth={260} 
+                     defaultFontSize={10.5} 
                      minFontSize={7}
                      maxLines={1}
                      className="font-semibold tracking-wide"
@@ -739,11 +739,11 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
           <div className="space-y-0.5">
             <SmartTextField 
               text={name || 'YOUR NAME'} 
-              maxWidth={230} 
-              defaultFontSize={40} 
+              maxWidth={235} 
+              defaultFontSize={44} 
               minFontSize={20} 
-              maxLines={1} 
-              className={`font-black tracking-tight leading-none uppercase ${smartLayout.nameTracking}`} 
+              maxLines={2} 
+              className={`font-black tracking-tighter leading-[0.9] uppercase ${smartLayout.nameTracking}`} 
               style={{ color: 'white', fontFamily: "'Montserrat', sans-serif" }} 
             />
             <SmartTextField 
