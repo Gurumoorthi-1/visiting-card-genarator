@@ -625,7 +625,7 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
             {(logoUrl || formData.company) && (
               <div className="flex items-center gap-4 mb-4">
                 {logoUrl && (
-                  <div className={`w-[140px] h-auto max-h-[85px] shrink-0 ${smartLayout.logoScaleClass}`}>
+                  <div className={`w-[180px] h-auto max-h-[100px] shrink-0 ${smartLayout.logoScaleClass}`}>
                      <img src={logoUrl} className="w-full h-full object-contain object-left drop-shadow-sm origin-left" />
                   </div>
                 )}
@@ -787,10 +787,10 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
         <div className="w-[48%] flex flex-col items-center justify-center pl-16 text-center relative transition-all duration-300">
           {/* Logo & Company */}
           <div className="flex flex-col items-center gap-2 mb-4 mr-0">
-             <div className="w-36 h-36 flex items-center justify-center mb-0 drop-shadow-xl">
-                {logoUrl ? <img src={logoUrl} alt="Logo" className="w-full h-full object-contain" style={{ imageRendering: 'high-quality' }} /> 
+             <div className="w-44 h-44 flex items-center justify-center mb-0 drop-shadow-xl">
+                {logoUrl ? <img src={logoUrl} alt="Logo" className="w-full h-full object-contain animate-fade-in" style={{ imageRendering: 'high-quality' }} /> 
                          : (
-                            <div className="relative w-32 h-32 flex items-center justify-center bg-white shadow-2xl rounded-full border border-slate-100 p-5">
+                            <div className="relative w-36 h-36 flex items-center justify-center bg-white shadow-2xl rounded-full border border-slate-100 p-5">
                                <svg viewBox="0 0 100 100" className="w-full h-full">
                                   <polygon points="50 1, 93 25, 93 75, 50 99, 7 75, 7 25" fill="none" stroke={waveMainBlue} strokeWidth="8" />
                                   <polygon points="50 15, 80 33, 80 67, 50 85, 20 67, 20 33" fill={waveLightBlue} />
@@ -945,10 +945,10 @@ const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout 
       {/* LEFT DARK SECTION ~40% */}
       <div className="relative w-[40%] flex flex-col justify-center items-center px-6 text-center border-r-[3px] border-[#2a2a2a]" style={{ backgroundColor: darkBg }}>
          <div className={`mb-3 flex justify-center items-center ${smartLayout.logoScaleClass}`}>
-            {logoUrl ? <img src={logoUrl} className="w-auto h-auto max-w-[140px] max-h-[100px] object-contain drop-shadow-[0_2px_4px_rgba(255,255,255,0.1)] brightness-110" /> : 
+            {logoUrl ? <img src={logoUrl} className="w-auto h-auto max-w-[180px] max-h-[130px] object-contain drop-shadow-[0_2px_4px_rgba(255,255,255,0.1)] brightness-110" /> : 
                (
-                 <div className="w-20 h-20 flex items-center justify-center">
-                    <span className="text-6xl font-black text-white">{initials}</span>
+                 <div className="w-24 h-24 flex items-center justify-center">
+                    <span className="text-7xl font-black text-white">{initials}</span>
                  </div>
                )
             }
