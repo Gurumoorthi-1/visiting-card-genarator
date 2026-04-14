@@ -161,6 +161,7 @@ export const TEMPLATES = {
   vanguard: { name: ' Vanguard Pro', id: 'vanguard' },
   wave: { name: 'Wave Pro', id: 'wave' },
   elegant: { name: 'Elegant Pro', id: 'elegant' },
+  studio: { name: 'Studio Pro', id: 'studio' },
 };
 
 function App() {

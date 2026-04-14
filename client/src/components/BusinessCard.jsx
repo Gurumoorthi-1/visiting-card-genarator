@@ -52,6 +52,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
   let { template, bgPrimary, bgSecondary, textPrimary, textSecondary, accentColor, fontFamily } = designParams;
 
   const isElegant = template === 'elegant';
+  const isStudio = template === 'studio';
   
   if (isElegant) {
     bgPrimary = '#fafafa';
@@ -59,6 +60,12 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
     textPrimary = '#1f223a';
     textSecondary = '#5a5b65';
     accentColor = '#cf9e38';
+  } else if (isStudio) {
+    bgPrimary = '#161618'; 
+    bgSecondary = '#1f1f22';
+    textPrimary = '#ffffff';
+    textSecondary = '#a0a0a5';
+    accentColor = '#ffffff';
   }
 
   const initials = formData.name
@@ -69,7 +76,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
 
   const smartLayout = getSmartLayout(name);
 
-  const qrFgColor = isElegant ? textPrimary : bgSecondary;
+  const qrFgColor = (isElegant || isStudio) ? textPrimary : bgSecondary;
 
 
   const commonProps = {
@@ -88,6 +95,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
       case 'vanguard': return <VanguardTemplate {...commonProps} />;
       case 'wave': return <WaveTemplate {...commonProps} />;
       case 'elegant': return <ElegantTemplate {...commonProps} />;
+      case 'studio': return <StudioTemplate {...commonProps} />;
       case 'modern':
       default: return <ModernTemplate {...commonProps} />;
     }
@@ -806,5 +814,105 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
   );
 };
 
+/* ── 12. STUDIO (Dark/Light Split) ── */
+const StudioTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
+  const darkBg = "#161618";
+  const lightBg = "#f0f0f0";
+  const textDark = "#1a1a1a";
+  const textLight = "#ffffff";
+  const textGrey = "#8c8c8c";
+
+  // Contacts mapped exactly to match user's screenshot layout Order: Phone, MapPin, Globe, Mail
+  const contactItems = [
+    { icon: Phone, text: formData.phone || "+123-456-7890" },
+    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" },
+    { icon: Globe, text: formData.website || "www.reallygreatsite.com" },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
+  ];
+
+  return (
+    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex bg-white shadow-2xl">
+      
+      {/* Subtle screen pixel/noise overlay spanning entire background to mimic photo */}
+      <div className="absolute inset-0 pointer-events-none opacity-5 z-[50]" 
+           style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+
+      {/* LEFT DARK SECTION ~40% */}
+      <div className="relative w-[40%] flex flex-col justify-center items-center px-6 text-center border-r-[3px] border-[#2a2a2a]" style={{ backgroundColor: darkBg }}>
+         <div className={`mb-3 flex justify-center items-center ${smartLayout.logoScaleClass}`}>
+            {logoUrl ? <img src={logoUrl} className="w-auto h-auto max-w-[140px] max-h-[100px] object-contain drop-shadow-[0_2px_4px_rgba(255,255,255,0.1)] brightness-110" /> : 
+               (
+                 <div className="w-20 h-20 flex items-center justify-center">
+                    <span className="text-6xl font-black text-white">{initials}</span>
+                 </div>
+               )
+            }
+         </div>
+         
+         <div className="flex flex-col items-center">
+           <SmartTextField 
+             text={formData.company || "STUDIO SHODWE"} 
+             maxWidth={180} 
+             defaultFontSize={16} 
+             minFontSize={10}
+             maxLines={2}
+             className="font-black font-sans tracking-widest uppercase leading-snug drop-shadow-sm"
+             style={{ color: textLight, textAlign: 'center' }}
+           />
+           <SmartTextField 
+             text={formData.tagline || "computer service expert"} 
+             maxWidth={160} 
+             defaultFontSize={10} 
+             minFontSize={7}
+             maxLines={2}
+             className="font-medium tracking-wide leading-tight lowercase"
+             style={{ color: textGrey, textAlign: 'center' }}
+           />
+         </div>
+      </div>
+
+      {/* RIGHT LIGHT SECTION ~60% */}
+      <div className="relative w-[60%] flex flex-col justify-center pl-10 pr-6" style={{ backgroundColor: lightBg }}>
+         
+         <div className="mb-8 mt-4">
+            <SmartTextField 
+              text={name || "MORGAN MAXWELL"} 
+              maxWidth={300} 
+              defaultFontSize={22} 
+              className={`font-black tracking-widest uppercase leading-tight ${smartLayout.nameTracking}`}
+              style={{ color: textDark, fontFamily: "'Inter', sans-serif" }}
+            />
+            <SmartTextField 
+              text={title || "COMPUTER MECHANIC"} 
+              maxWidth={300} 
+              defaultFontSize={11} 
+              className="font-bold tracking-[0.2em] uppercase mt-0.5"
+              style={{ color: "#4a4a4a", fontFamily: "'Inter', sans-serif" }}
+            />
+         </div>
+
+         <div className="flex flex-col gap-2.5">
+           {contactItems.map((contact, i) => {
+              if(!contact.text) return null;
+              return (
+                <div key={i} className="flex items-center gap-3">
+                   <contact.icon strokeWidth={2.5} size={14} color="#1a1a1a" className="shrink-0" />
+                   <SmartTextField 
+                     text={contact.text} 
+                     maxWidth={250} 
+                     defaultFontSize={10} 
+                     className="font-bold tracking-wide uppercase"
+                     style={{ color: "#333" }}
+                   />
+                </div>
+              );
+           })}
+         </div>
+
+      </div>
+
+    </div>
+  );
+};
 
 export default BusinessCard;
