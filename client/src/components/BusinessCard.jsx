@@ -104,7 +104,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
       case 'elegant': return <ElegantTemplate {...commonProps} />;
       case 'studio': return <StudioTemplate {...commonProps} />;
       case 'skyline': return <SkylineTemplate {...commonProps} />;
-      case 'crystal': return <CrystalTemplate {...commonProps} />;
+      case 'swift': return <SwiftTemplate {...commonProps} />;
       case 'modern':
       default: return <ModernTemplate {...commonProps} />;
     }
@@ -1131,91 +1131,74 @@ const SkylineTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
   );
 };
 
-/* ── 14. CRYSTAL PRO (Sharp Geometric Style) ── */
-const CrystalTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
-  const navy = "#1e3a8a";
-  const royal = "#2563eb";
-  const sky = "#60a5fa";
-  const textDark = "#334155";
-  const textGray = "#64748b";
+/* ── 14. SWIFT PRO (Black & Gold Swoosh Style) ── */
+const SwiftTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
+  const gold = "#d4af37";
+  const bgLight = "#fcfcfc";
 
   const contactItems = [
-    { icon: Phone, text: formData.phone || "+123-456-7890" },
-    { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
+    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" },
+    { icon: Phone, text: formData.phone || "123-456-7890" },
+    { icon: Globe, text: formData.website || "reallygreatsite.com", href: formData.website },
     { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
   ].filter(item => item.text);
 
   return (
-    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden bg-[#f0f4f8]">
+    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex bg-white" style={{ backgroundColor: bgLight }}>
       
-      {/* Background Geometric Shapes */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 540 300" preserveAspectRatio="none">
-        {/* Large Right Navy Shape */}
-        <path d="M 280 0 L 540 0 L 540 300 L 420 300 Z" fill={navy} />
-        {/* Royal Blue Overlay */}
-        <path d="M 330 0 L 540 0 L 540 220 L 460 300 L 400 300 Z" fill={royal} />
-        {/* Sky Blue Arrow Lip */}
-        <path d="M 400 0 L 540 0 L 420 120 L 540 240 L 540 300 L 480 300 L 370 150 Z" fill={sky} fillOpacity="0.8" />
-        
-        {/* Bottom Left Corner Shapes */}
-        <path d="M 0 220 L 80 300 L 0 300 Z" fill={royal} />
-        <path d="M 0 250 L 50 300 L 0 300 Z" fill={navy} />
-        <path d="M 0 270 L 30 300 L 0 300 Z" fill={sky} />
-
-        {/* Top Left Subtle Grey Shapes */}
-        <path d="M 0 0 L 220 0 L 0 180 Z" fill="rgba(0,0,0,0.03)" />
-        <path d="M 50 0 L 200 0 L 0 150 Z" fill="rgba(0,0,0,0.02)" />
+      {/* Background Swoosh Patterns */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 540 300" preserveAspectRatio="none">
+         {/* Main Black Background */}
+         <path d="M 0 0 L 240 0 Q 70 120 0 300 Z" fill="#1a1a1a" />
+         
+         {/* Gold Accent Swooshes */}
+         <path d="M 240 0 Q 80 130 50 300 L 70 300 Q 100 130 255 0 Z" fill={gold} opacity="0.6" />
+         <path d="M 235 0 Q 75 125 40 300 L 45 300 Q 80 125 240 0 Z" fill={gold} />
       </svg>
 
-      <div className="relative z-10 w-full h-full flex flex-col p-8">
-        
-        {/* Header: Logo and Company */}
-        <div className="flex items-center gap-3 mb-8">
-           <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-md border border-slate-200">
-             {logoUrl ? <img src={logoUrl} className="w-6 h-6 object-contain" /> : 
-                <div className="w-5 h-5 rounded-sm border-2 rotate-45" style={{ borderColor: royal }} />
-             }
-           </div>
-           <SmartTextField 
-             text={formData.company || "SALFORD & CO."} 
-             maxWidth={200} 
-             defaultFontSize={14} 
-             className="font-black tracking-widest text-[#1a365d] uppercase"
-           />
-        </div>
+      {/* Profile & Name Info (Top Right Align) */}
+      <div className="relative z-10 w-full flex flex-col justify-center items-end pr-14 pl-40 py-10">
+         
+         <div className="text-right mb-12">
+            <SmartTextField 
+              text={name || "Aaron Loeb"} 
+              maxWidth={300} 
+              defaultFontSize={36} 
+              className="font-black text-slate-800 tracking-tight"
+            />
+            <SmartTextField 
+              text={title || "Graphics Designer"} 
+              maxWidth={300} 
+              defaultFontSize={14} 
+              className="font-medium italic text-slate-500 tracking-wide mt-1"
+            />
+         </div>
 
-        {/* Main Section */}
-        <div className="flex-1 flex flex-col justify-center">
-           <div className="mb-8 pl-4 border-l-4" style={{ borderColor: royal }}>
-              <SmartTextField 
-                text={name || "ISABEL MERCADO"} 
-                maxWidth={350} 
-                defaultFontSize={32} 
-                className="font-black tracking-wide text-[#1a365d] uppercase"
-              />
-              <div className="h-[2px] w-32 bg-slate-400 mt-1 mb-2" />
-              <SmartTextField 
-                text={title || "General Manager"} 
-                maxWidth={350} 
-                defaultFontSize={18} 
-                className="font-bold tracking-widest text-slate-600"
-              />
-           </div>
+         {/* Contact List */}
+         <div className="flex flex-col gap-3.5 items-end">
+            {contactItems.map((contact, i) => (
+               <div key={i} className="flex items-center justify-end gap-3.5 group">
+                  <SmartTextField 
+                    text={contact.text} 
+                    maxWidth={260} 
+                    defaultFontSize={13} 
+                    className="font-medium text-slate-700 tracking-tight"
+                    href={contact.href}
+                    style={{ textAlign: 'right' }}
+                  />
+                  <div className="w-[26px] h-[26px] rounded-full flex items-center justify-center shrink-0 shadow-md transition-transform group-hover:scale-110" style={{ backgroundColor: gold }}>
+                     <contact.icon strokeWidth={2} size={13} color="#1a1a1a" />
+                  </div>
+               </div>
+            ))}
+         </div>
 
-           <div className="flex flex-col gap-2 pl-4">
-              {contactItems.map((contact, i) => (
-                <SmartTextField 
-                  key={i}
-                  text={contact.text} 
-                  maxWidth={300} 
-                  defaultFontSize={12} 
-                  className="font-bold tracking-tight text-slate-700"
-                  href={contact.href}
-                />
-              ))}
-           </div>
-        </div>
-
+         {/* Bottom Logo (Subtle) */}
+         {logoUrl && (
+            <div className="absolute bottom-5 left-5 w-24 h-24 z-20">
+               <img src={logoUrl} className="w-full h-full object-contain filter brightness-0 invert opacity-40" />
+            </div>
+         )}
       </div>
 
     </div>

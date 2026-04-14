@@ -22,7 +22,7 @@ const TEMPLATE_OPTIONS = [
   { id: 'elegant', name: 'Elegant Pro Template' },
   { id: 'studio', name: 'Studio Pro Template' },
   { id: 'skyline', name: 'Skyline Pro Template' },
-  { id: 'crystal', name: 'Crystal Pro Template' }
+  { id: 'swift', name: 'Swift Pro Template' }
 ];
 
 const REQUIRED_FIELDS = [
