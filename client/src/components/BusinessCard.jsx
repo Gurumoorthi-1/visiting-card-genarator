@@ -1131,72 +1131,88 @@ const SkylineTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
   );
 };
 
-/* ── 14. SWIFT PRO (Black & Gold Swoosh Style) ── */
+/* ── 14. SWIFT PRO (Black & Gold Refined) ── */
 const SwiftTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
-  const gold = "#d4af37";
-  const bgLight = "#fcfcfc";
+  const goldGradient = "linear-gradient(135deg, #d4af37 0%, #f9e29c 50%, #b8860b 100%)";
+  const bgLight = "#ffffff";
+  const goldSolid = "#d4af37";
 
   const contactItems = [
     { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" },
     { icon: Phone, text: formData.phone || "123-456-7890" },
-    { icon: Globe, text: formData.website || "reallygreatsite.com", href: formData.website },
     { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
+    { icon: Globe, text: formData.website || "reallygreatsite.com", href: formData.website },
   ].filter(item => item.text);
 
   return (
     <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex bg-white" style={{ backgroundColor: bgLight }}>
       
-      {/* Background Swoosh Patterns */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 540 300" preserveAspectRatio="none">
-         {/* Main Black Background */}
-         <path d="M 0 0 L 240 0 Q 70 120 0 300 Z" fill="#1a1a1a" />
-         
-         {/* Gold Accent Swooshes */}
-         <path d="M 240 0 Q 80 130 50 300 L 70 300 Q 100 130 255 0 Z" fill={gold} opacity="0.6" />
-         <path d="M 235 0 Q 75 125 40 300 L 45 300 Q 80 125 240 0 Z" fill={gold} />
-      </svg>
+      {/* Background Patterns - Perfectly Matched to Image */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <svg className="w-full h-full" viewBox="0 0 540 300" preserveAspectRatio="none">
+          <defs>
+             <linearGradient id="goldMetallic" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#b8860b" />
+                <stop offset="30%" stopColor="#f9e29c" />
+                <stop offset="60%" stopColor="#d4af37" />
+                <stop offset="100%" stopColor="#8a6d3b" />
+             </linearGradient>
+          </defs>
+          
+          {/* Main Thick Black Area */}
+          <path d="M 0 0 L 400 0 Q 150 120 0 300 Z" fill="#000000" />
+          
+          {/* Gold Swoosh Band - Perfectly flush with black */}
+          <path d="M 400 0 Q 150 120 0 300 L 20 300 Q 170 120 420 0 Z" fill="url(#goldMetallic)" />
+          
+          {/* Subtle Accent underneath */}
+          <path d="M 420 0 Q 170 120 20 300 L 45 300 Q 195 120 445 0 Z" fill="#d4af37" opacity="0.3" />
+        </svg>
+      </div>
 
-      {/* Profile & Name Info (Top Right Align) */}
-      <div className="relative z-10 w-full flex flex-col justify-center items-end pr-14 pl-40 py-10">
+      {/* Content Area */}
+      <div className="relative z-10 w-full flex flex-col justify-center items-end pr-14 pl-52 py-10">
          
-         <div className="text-right mb-12">
+         <div className="text-right mb-14 mr-2">
             <SmartTextField 
               text={name || "Aaron Loeb"} 
               maxWidth={300} 
-              defaultFontSize={36} 
-              className="font-black text-slate-800 tracking-tight"
+              defaultFontSize={38} 
+              className="font-black text-slate-900 tracking-tight"
+              style={{ fontFamily: "'Inter', sans-serif" }}
             />
             <SmartTextField 
               text={title || "Graphics Designer"} 
               maxWidth={300} 
-              defaultFontSize={14} 
-              className="font-medium italic text-slate-500 tracking-wide mt-1"
+              defaultFontSize={15} 
+              className="font-medium italic text-slate-600 tracking-widest mt-1 opacity-80"
+              style={{ fontFamily: "'Inter', sans-serif" }}
             />
          </div>
 
          {/* Contact List */}
-         <div className="flex flex-col gap-3.5 items-end">
+         <div className="flex flex-col gap-4 items-end">
             {contactItems.map((contact, i) => (
                <div key={i} className="flex items-center justify-end gap-3.5 group">
                   <SmartTextField 
                     text={contact.text} 
                     maxWidth={260} 
-                    defaultFontSize={13} 
-                    className="font-medium text-slate-700 tracking-tight"
+                    defaultFontSize={14} 
+                    className="font-bold text-slate-800 tracking-tight"
                     href={contact.href}
-                    style={{ textAlign: 'right' }}
+                    style={{ textAlign: 'right', fontFamily: "'Inter', sans-serif" }}
                   />
-                  <div className="w-[26px] h-[26px] rounded-full flex items-center justify-center shrink-0 shadow-md transition-transform group-hover:scale-110" style={{ backgroundColor: gold }}>
-                     <contact.icon strokeWidth={2} size={13} color="#1a1a1a" />
+                  <div className="w-[28px] h-[28px] rounded-full flex items-center justify-center shrink-0 shadow-lg border border-yellow-200/20" style={{ background: goldSolid }}>
+                     <contact.icon strokeWidth={2.5} size={14} color="#000000" />
                   </div>
                </div>
             ))}
          </div>
 
-         {/* Bottom Logo (Subtle) */}
+         {/* Bottom Logo Integration */}
          {logoUrl && (
-            <div className="absolute bottom-5 left-5 w-24 h-24 z-20">
-               <img src={logoUrl} className="w-full h-full object-contain filter brightness-0 invert opacity-40" />
+            <div className="absolute bottom-6 left-6 w-24 h-24 z-20 flex items-center justify-center opacity-40">
+               <img src={logoUrl} className="max-w-full max-h-full object-contain filter brightness-0 invert" />
             </div>
          )}
       </div>
