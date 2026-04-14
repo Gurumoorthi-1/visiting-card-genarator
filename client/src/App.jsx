@@ -158,6 +158,7 @@ export const TEMPLATES = {
   studio: { name: 'Studio Pro', id: 'studio' },
   skyline: { name: 'Skyline Pro', id: 'skyline' },
   ocean: { name: 'Ocean Pro', id: 'ocean' },
+  prism: { name: 'Prism Pro', id: 'prism' },
 };
 
 function App() {
