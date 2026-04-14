@@ -5,6 +5,7 @@ import {
   MapPin, Link2, MessageCircle, Share2, Upload, X, Palette, LayoutTemplate, Sparkles, Wand2, Cloud, Trash2
 } from 'lucide-react';
 import { PRESETS, TEMPLATES, FONTS } from '../App';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { motion, AnimatePresence } from 'framer-motion';
 import SmartImport from './SmartImport';
 
@@ -25,8 +26,9 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
-// Global OpenAI Configuration
-const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+// Global Gemini Configuration
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
 
 // Helper function to provide smart offline taglines if API fails or quota exceeds
 const fallbackMockGenerator = (titleStr) => {
@@ -42,56 +44,35 @@ const fallbackMockGenerator = (titleStr) => {
   }
 };
 
-// Real API Fetch Logic using OpenAI
+// Real API Fetch Logic using Gemini
 const fetchTaglines = async (jobTitle) => {
   const t = (jobTitle || '').trim();
   if (t.length < 2) return [];
 
-  if (!OPENAI_API_KEY) {
-    console.warn("No VITE_OPENAI_API_KEY provided in .env. Using mock data.");
+  if (!genAI) {
+    console.warn("No VITE_GEMINI_API_KEY provided in .env. Using mock data.");
     return new Promise((resolve) => setTimeout(() => resolve(fallbackMockGenerator(t)), 800));
   }
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "system", 
-            content: "You are an expert brand strategist. Generate exactly 3 short, punchy, and highly professional personal taglines or catchphrases (maximum 5 words each) for the given job title. Return ONLY the three taglines separated by a pipe character (|) without numbering or quotation marks."
-          },
-          {
-            role: "user",
-            content: `Job Title: ${t}`
-          }
-        ],
-        temperature: 0.7,
-        max_tokens: 60
-      })
-    });
-
-    const data = await response.json();
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const prompt = `Act as an expert brand strategist. Generate exactly 3 short, punchy, and highly professional personal taglines or catchphrases (maximum 5 words each) for someone whose job title is "${t}". Return ONLY the three taglines separated by a pipe character (|) without numbering or quotation marks.`;
     
-    if (data.error) {
-      throw new Error(data.error.message);
-    }
-
-    const text = data.choices[0].message.content;
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+    
+    // Parse the output
     const suggestions = text.split('|').map(s => s.trim().replace(/^['"]|['"]$/g, '')).filter(Boolean);
-    
     return suggestions.length >= 3 ? suggestions.slice(0, 3) : fallbackMockGenerator(t);
   } catch (error) {
-    console.error("OpenAI Generation Error:", error);
-    if (error.message && (error.message.includes('429') || error.message.includes('quota'))) {
+    console.error("Gemini Generation Error:", error);
+    
+    // Check if Rate Limit / Quota Exceeded (429)
+    if (error.status === 429 || (error.message && (error.message.includes('429') || error.message.includes('quota')))) {
        const mockTags = fallbackMockGenerator(t);
        return [`⚠️ Rate Limited (${mockTags[0]})`, mockTags[1], mockTags[2]];
     }
+    
     return fallbackMockGenerator(t);
   }
 };
