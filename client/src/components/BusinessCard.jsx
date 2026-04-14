@@ -113,7 +113,8 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
 
   const smartLayout = getSmartLayout(name);
 
-  const qrFgColor = (isElegant || isVanguard) ? textPrimary : (isStudio ? bgPrimary : bgSecondary);
+  const isDarkBack = ['studio', 'skyline', 'ocean', 'abstract'].includes(template);
+  const qrFgColor = isDarkBack ? '#ffffff' : (template === 'xyzon' ? '#0047AB' : textPrimary);
 
 
   const commonProps = {
