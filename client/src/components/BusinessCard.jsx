@@ -75,6 +75,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
       case 'golden': return <GoldenTemplate {...commonProps} />;
       case 'vanguard': return <VanguardTemplate {...commonProps} />;
       case 'wave': return <WaveTemplate {...commonProps} />;
+      case 'elegant': return <ElegantTemplate {...commonProps} />;
       case 'modern':
       default: return <ModernTemplate {...commonProps} />;
     }
@@ -686,6 +687,106 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
              </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
+
+/* ── 11. ELEGANT (Mimics User Card) ── */
+const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
+  const navy = "#1f223a";
+  const gold = "#d4af37";
+  const textDark = "#353443";
+  const textLight = "#5a5b65";
+  const iconGold = "#cf9e38";
+
+  return (
+    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden bg-[#fafafa]">
+      
+      {/* Subtle grey wave texture */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 540 300" preserveAspectRatio="none">
+        {/* Curved shadows/waves for realism */}
+        <path d="M -50 150 Q 250 220 590 -20 L 590 -50 L -50 -50 Z" fill="rgba(0,0,0,0.015)" />
+        <path d="M -50 350 Q 250 140 590 320 L 590 350 L -50 350 Z" fill="rgba(0,0,0,0.02)" />
+
+         {/* Top Left Gold Background */}
+         <path d="M 0 0 L 160 0 Q 30 15 0 90 Z" fill={gold} />
+         {/* Top Left Navy Foreground */}
+         <path d="M 0 0 L 135 0 Q 20 10 0 70 Z" fill={navy} />
+         
+         {/* Bottom Right Gold Background */}
+         <path d="M 250 300 Q 420 270 540 100 L 540 300 Z" fill={gold} />
+         {/* Bottom Right Navy Foreground */}
+         <path d="M 290 300 Q 440 280 540 130 L 540 300 Z" fill={navy} />
+      </svg>
+
+      <div className="relative z-10 w-full h-full flex flex-col justify-between px-12 py-10">
+         {/* Top Section */}
+         <div className="flex justify-between items-start w-full pr-4">
+            
+            <div className="flex flex-col mt-2">
+               <SmartTextField 
+                 text={name || "Daniel Gallego"} 
+                 maxWidth={300} 
+                 defaultFontSize={30} 
+                 className={`font-semibold tracking-wide ${smartLayout.nameTracking}`}
+                 style={{ color: textDark, fontFamily: "'Inter', sans-serif" }}
+               />
+               <SmartTextField 
+                 text={title || "Marketing Manager"} 
+                 maxWidth={300} 
+                 defaultFontSize={13} 
+                 className="font-bold tracking-wide mt-0.5"
+                 style={{ color: gold, fontFamily: "'Inter', sans-serif" }}
+               />
+            </div>
+
+            <div className="flex flex-col items-center justify-center -mt-3 relative z-20">
+               <div className={`w-14 h-14 flex justify-center items-center mb-1 ${smartLayout.logoScaleClass}`}>
+                  {logoUrl ? <img src={logoUrl} className="max-w-[50px] max-h-[50px] object-contain" /> : 
+                     (
+                       <div className="w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center bg-white shadow-sm">
+                          <span className="text-xl font-black text-slate-400">{initials}</span>
+                       </div>
+                     )
+                  }
+               </div>
+               <SmartTextField 
+                 text={formData.company || "Larana, Inc."} 
+                 maxWidth={140} 
+                 defaultFontSize={12} 
+                 className="font-bold font-sans tracking-wide"
+                 style={{ color: textDark, textAlign: 'center' }}
+               />
+            </div>
+         </div>
+
+         {/* Contact Section */}
+         <div className="flex flex-col gap-3 mb-1 ml-1 relative z-20">
+           {[
+             { icon: Phone, text: formData.phone || "+123-456-7890" },
+             { icon: Mail, text: formData.email }, 
+             { icon: Globe, text: formData.website || "www.reallygreatsite.com" },
+             { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" }
+           ].map((contact, i) => {
+              if(!contact.text) return null;
+              return (
+                <div key={i} className="flex items-center gap-3.5">
+                   <div className="w-[20px] h-[20px] rounded-full flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: iconGold }}>
+                      <contact.icon strokeWidth={2.5} size={11} color="white" />
+                   </div>
+                   <SmartTextField 
+                     text={contact.text} 
+                     maxWidth={260} 
+                     defaultFontSize={11} 
+                     className="font-medium tracking-wide"
+                     style={{ color: textLight }}
+                   />
+                </div>
+              );
+           })}
+         </div>
+
       </div>
     </div>
   );
