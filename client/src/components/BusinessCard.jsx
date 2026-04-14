@@ -741,12 +741,12 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
                />
             </div>
 
-            <div className="flex flex-col items-center justify-center -mt-3 relative z-20">
-               <div className={`w-14 h-14 flex justify-center items-center mb-1 ${smartLayout.logoScaleClass}`}>
-                  {logoUrl ? <img src={logoUrl} className="max-w-[50px] max-h-[50px] object-contain" /> : 
+            <div className="flex flex-col items-center justify-center -mt-6 relative z-20">
+               <div className={`w-28 h-28 flex justify-center items-center mb-0 ${smartLayout.logoScaleClass}`}>
+                  {logoUrl ? <img src={logoUrl} className="max-w-[90px] max-h-[90px] object-contain drop-shadow-sm" /> : 
                      (
-                       <div className="w-12 h-12 rounded-full border border-slate-300 flex items-center justify-center bg-white shadow-sm">
-                          <span className="text-xl font-black text-slate-400">{initials}</span>
+                       <div className="w-20 h-20 rounded-full border border-slate-300 flex items-center justify-center bg-white shadow-sm">
+                          <span className="text-4xl font-black text-slate-400">{initials}</span>
                        </div>
                      )
                   }
