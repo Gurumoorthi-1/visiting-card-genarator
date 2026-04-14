@@ -85,6 +85,12 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
     textPrimary = '#ffffff';
     textSecondary = '#cbd5e1';
     accentColor = '#47a1e0';
+  } else if (template === 'ocean') {
+    bgPrimary = '#1b3a6d';
+    bgSecondary = '#162e55';
+    textPrimary = '#ffffff';
+    textSecondary = '#94a3b8';
+    accentColor = '#2563eb';
   }
 
   const initials = formData.name
