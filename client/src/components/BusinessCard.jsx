@@ -53,6 +53,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
 
   const isElegant = template === 'elegant';
   const isStudio = template === 'studio';
+  const isVanguard = template === 'vanguard';
   
   if (isElegant) {
     bgPrimary = '#fafafa';
@@ -66,6 +67,12 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
     textPrimary = '#ffffff';
     textSecondary = '#a0a0a5';
     accentColor = '#ffffff';
+  } else if (isVanguard) {
+    bgPrimary = '#f2f2f2'; 
+    bgSecondary = '#e8e8e8';
+    textPrimary = '#2b2d42';
+    textSecondary = '#4a4e69';
+    accentColor = '#1d2d50';
   }
 
   const initials = formData.name
@@ -76,7 +83,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
 
   const smartLayout = getSmartLayout(name);
 
-  const qrFgColor = isElegant ? textPrimary : (isStudio ? bgPrimary : bgSecondary);
+  const qrFgColor = (isElegant || isVanguard) ? textPrimary : (isStudio ? bgPrimary : bgSecondary);
 
 
   const commonProps = {
@@ -541,48 +548,111 @@ const GoldenTemplate = ({ name, title, formData, initials, hasSocial, logoUrl, s
 
 
 /* ── 9. VANGUARD (Geometric Pro) ── */
-const VanguardTemplate = ({ name, title, formData, logoUrl, smartLayout, textPrimary, textSecondary, accentColor, bgPrimary }) => (
-  <div className="absolute inset-0 z-10 w-full overflow-hidden flex">
-    {/* Geometric Background */}
-    <div className="absolute top-0 right-0 w-[45%] h-full transform skew-x-[-12deg] translate-x-12 z-0 shadow-2xl" style={{ borderLeft: `8px solid ${accentColor}`, backgroundColor: bgPrimary }} />
-    
-    <div className="relative z-10 w-full h-full flex items-center p-10">
-      <div className="w-full flex justify-between items-center gap-8">
-        <div className="space-y-6 flex-1">
-          <div className="space-y-1">
-            <SmartTextField text={name || 'Your Name'} maxWidth={240} defaultFontSize={36} minFontSize={16} maxLines={1} className={`font-black tracking-tighter leading-none uppercase ${smartLayout.nameTracking}`} style={{ color: textPrimary }} />
-            <div className="h-1.5 w-20 rounded-full" style={{ background: accentColor }} />
-            <SmartTextField text={title || 'Job Title'} maxWidth={300} defaultFontSize={12} minFontSize={8} maxLines={1} className="font-bold uppercase tracking-[0.25em] mt-2" style={{ color: textSecondary }} />
-          </div>
-          
-          <div className="space-y-3 pt-4">
-            {formData.phone && <ContactRow icon={Phone} text={formData.phone} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={220} />}
-            {formData.email && <ContactRow icon={Mail} text={formData.email} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={220} />}
-            {formData.location && <ContactRow icon={MapPin} text={formData.location} tP={textPrimary} tS={textSecondary} aC={accentColor} maxW={220} />}
-          </div>
-        </div>
-        
-        <div className="flex flex-col items-center gap-6 shrink-0 w-[150px]">
-          <div className={`w-28 h-28 rounded-[2rem] overflow-hidden flex items-center justify-center bg-white shadow-2xl ring-8 ring-white/10 ${smartLayout.logoScaleClass}`}>
-            {logoUrl ? <img src={logoUrl} alt="Logo" className="w-full h-full object-contain p-4" /> : <div className="text-4xl font-black text-slate-800">V</div>}
-          </div>
-          <div className="text-center">
-            <SmartTextField text={formData.company || 'Enterprise'} maxWidth={150} defaultFontSize={14} minFontSize={9} maxLines={2} className="font-black uppercase tracking-wider text-center" style={{ color: textPrimary, textAlign: 'center' }} />
+const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => {
+  const textDark = "#2b2d42";
+  const bgLight = "#f4f4f4";
+  const iconBg = "#2b2d42";
+  const outline = "#1d2d50"; 
+  const darkDiamond = "#1d2d50";
+  const lightDiamond = "#1a80b6";
+
+  const D = ({ cx, cy, type, r = 68 }) => {
+    const pts = `${cx},${cy - r} ${cx + r},${cy} ${cx},${cy + r} ${cx - r},${cy}`;
+    if (type === 'dark') return <polygon points={pts} fill={darkDiamond} />;
+    if (type === 'light') return <polygon points={pts} fill={lightDiamond} />;
+    if (type === 'outline') return <polygon points={pts} fill="none" stroke={outline} strokeWidth="3" opacity="0.8" />;
+    return null;
+  };
+
+  const contactItems = [
+    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City" },
+    { icon: Phone, text: formData.phone || "+123-456-7890" },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
+    { icon: Globe, text: formData.website || "www.reallygreatsite.com" },
+  ];
+
+  return (
+    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex shadow-2xl" style={{ backgroundColor: bgLight }}>
+      
+      {/* Background Texture */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.04] z-[5]" 
+           style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+
+      {/* Geometric Right Pattern */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 540 300">
+         <g>
+           {/* FILLS */}
+           <D cx={438} cy={82} type="light" />
+           <D cx={438} cy={218} type="light" />
+           <D cx={506} cy={14} type="dark" />
+           <D cx={506} cy={286} type="dark" />
+           <D cx={574} cy={82} type="dark" />
+           <D cx={574} cy={218} type="light" />
+           <D cx={642} cy={150} type="dark" />
+
+           <D cx={370} cy={-20} type="dark" />
+           <D cx={370} cy={320} type="dark" />
+           
+           {/* OUTLINES */}
+           <D cx={370} cy={150} type="outline" />
+           <D cx={506} cy={150} type="outline" />
+           <D cx={574} cy={354} type="outline" />
+         </g>
+      </svg>
+
+      {/* Content */}
+      <div className="relative z-10 w-[65%] h-full flex flex-col justify-center px-12 py-8">
+         <div className="mb-6 mt-2 relative">
+            {logoUrl && (
+              <div className="w-12 h-12 mb-3">
+                 <img src={logoUrl} className="w-full h-full object-contain drop-shadow-sm" />
+              </div>
+            )}
             <SmartTextField 
-              text={formData.tagline || 'Innovation First'} 
-              maxWidth={140} 
-              defaultFontSize={9} 
-              minFontSize={6} 
-              maxLines={2} 
-              className="font-bold opacity-70 mt-1 uppercase text-center leading-tight" 
-              style={{ color: textSecondary, textAlign: 'center' }} 
+              text={name || "Cahaya Dewi"} 
+              maxWidth={300} 
+              defaultFontSize={32} 
+              minFontSize={14}
+              maxLines={1}
+              className={`font-black tracking-wide leading-tight ${smartLayout.nameTracking}`}
+              style={{ color: textDark, fontFamily: "'Inter', sans-serif" }}
             />
-          </div>
-        </div>
+            <SmartTextField 
+              text={title || "DESIGNER"} 
+              maxWidth={300} 
+              defaultFontSize={14} 
+              minFontSize={8}
+              className="font-bold tracking-widest uppercase mt-1"
+              style={{ color: textDark, opacity: 0.9, fontFamily: "'Inter', sans-serif" }}
+            />
+         </div>
+
+         <div className="flex flex-col gap-3">
+           {contactItems.map((contact, i) => {
+              if(!contact.text) return null;
+              return (
+                <div key={i} className="flex items-center gap-3.5">
+                   <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 shadow-sm" style={{ backgroundColor: iconBg }}>
+                      <contact.icon strokeWidth={2.5} size={12} color="#f4f4f4" />
+                   </div>
+                   <SmartTextField 
+                     text={contact.text} 
+                     maxWidth={250} 
+                     defaultFontSize={11} 
+                     minFontSize={7}
+                     maxLines={1}
+                     className="font-semibold tracking-wide"
+                     style={{ color: textSecondary }}
+                   />
+                </div>
+              );
+           })}
+         </div>
       </div>
+
     </div>
-  </div>
-);
+  );
+};
 
 /* ── 10. WAVE (Premium Curve) ── */
 const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, textSecondary, accentColor, bgPrimary, bgSecondary, smartLayout }) => {
