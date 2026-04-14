@@ -741,21 +741,23 @@ const ElegantTemplate = ({ name, title, formData, logoUrl, initials, smartLayout
                />
             </div>
 
-            <div className="flex flex-col items-center justify-center -mt-6 relative z-20">
-               <div className={`w-28 h-28 flex justify-center items-center mb-0 ${smartLayout.logoScaleClass}`}>
-                  {logoUrl ? <img src={logoUrl} className="max-w-[90px] max-h-[90px] object-contain drop-shadow-sm" /> : 
+            <div className="flex flex-col items-center justify-center -mt-6 relative z-20 w-[180px]">
+               <div className={`w-36 h-36 flex justify-center items-center mb-0 ${smartLayout.logoScaleClass}`}>
+                  {logoUrl ? <img src={logoUrl} className="max-w-[120px] max-h-[120px] object-contain drop-shadow-md" /> : 
                      (
-                       <div className="w-20 h-20 rounded-full border border-slate-300 flex items-center justify-center bg-white shadow-sm">
-                          <span className="text-4xl font-black text-slate-400">{initials}</span>
+                       <div className="w-24 h-24 rounded-full border border-slate-300 flex items-center justify-center bg-white shadow-sm">
+                          <span className="text-5xl font-black text-slate-400">{initials}</span>
                        </div>
                      )
                   }
                </div>
                <SmartTextField 
-                 text={formData.company || "Larana, Inc."} 
-                 maxWidth={140} 
-                 defaultFontSize={12} 
-                 className="font-bold font-sans tracking-wide"
+                 text={formData.company || "Xyzon Innovation Private Limited"} 
+                 maxWidth={180} 
+                 defaultFontSize={16} 
+                 minFontSize={10}
+                 maxLines={3}
+                 className="font-black font-sans tracking-tight uppercase leading-tight"
                  style={{ color: textDark, textAlign: 'center' }}
                />
             </div>
