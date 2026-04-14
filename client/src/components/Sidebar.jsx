@@ -134,19 +134,7 @@ const InputField = ({ label, icon: Icon, name, value, onChange, placeholder, typ
   );
 };
 
-const ColorPicker = ({ label, value, onChange }) => (
-  <div className="flex items-center justify-between bg-white/60 p-2 rounded-xl border border-slate-200">
-    <span className="text-xs font-bold text-slate-600 pl-1 uppercase tracking-wider">{label}</span>
-    <div className="relative w-8 h-8 rounded-lg overflow-hidden shadow-sm border border-slate-200">
-      <input 
-        type="color" 
-        value={value} 
-        onChange={onChange} 
-        className="absolute -top-2 -left-2 w-12 h-12 cursor-pointer"
-      />
-    </div>
-  </div>
-);
+
 
 const Section = ({ title, icon: Icon }) => (
   <div className="flex items-center gap-3 mt-4 mb-2">
@@ -284,27 +272,7 @@ const Sidebar = ({ formData, setFormData, onLogoUpload, logoUrl, setLogoUrl, des
           ))}
         </div>
 
-        {/* ── THEME PRESETS ── */}
-        <Section title="Color Presets" />
-        <div className="flex flex-wrap gap-2.5">
-          {Object.entries(PRESETS).map(([key, tpl]) => {
-            const isActive = designParams.bgPrimary === tpl.bgPrimary && designParams.textPrimary === tpl.textPrimary;
-            return (
-              <button
-                key={key}
-                onClick={() => applyPreset(key)}
-                title={tpl.name}
-                className={`relative w-8 h-8 rounded-full transition-all duration-300 ${isActive ? 'scale-110 shadow-lg' : 'hover:scale-105 shadow-md'}`}
-                style={{ 
-                  background: `linear-gradient(135deg, ${tpl.bgPrimary}, ${tpl.bgSecondary})`,
-                  boxShadow: isActive ? `0 0 0 2px white, 0 0 0 4px ${tpl.accentColor}` : ''
-                }}
-              >
-                {isActive && <span className="absolute inset-0 flex items-center justify-center text-white text-[10px] font-black">✓</span>}
-              </button>
-            )
-          })}
-        </div>
+
 
         {/* ── FONT SELECTION ── */}
         <Section title="Typography" />
@@ -328,17 +296,7 @@ const Sidebar = ({ formData, setFormData, onLogoUpload, logoUrl, setLogoUrl, des
           ))}
         </div>
 
-        {/* ── CUSTOM COLORS ── */}
-        <Section title="Custom Colors" />
-        <div className="grid grid-cols-2 gap-2">
-          <ColorPicker label="BG Primary" value={designParams.bgPrimary} onChange={(e) => updateDesignColor('bgPrimary', e.target.value)} />
-          <ColorPicker label="BG Secondary" value={designParams.bgSecondary} onChange={(e) => updateDesignColor('bgSecondary', e.target.value)} />
-          <ColorPicker label="Text Primary" value={designParams.textPrimary} onChange={(e) => updateDesignColor('textPrimary', e.target.value)} />
-          <ColorPicker label="Text Sec." value={designParams.textSecondary} onChange={(e) => updateDesignColor('textSecondary', e.target.value)} />
-          <div className="col-span-2">
-            <ColorPicker label="Accent / Icons" value={designParams.accentColor} onChange={(e) => updateDesignColor('accentColor', e.target.value)} />
-          </div>
-        </div>
+
 
         {/* ── LOGO ── */}
         <div className="flex items-center justify-between mb-0 mt-3 px-0.5">
