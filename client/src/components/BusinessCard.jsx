@@ -100,7 +100,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
       case 'studio': return <StudioTemplate {...commonProps} />;
       case 'skyline': return <SkylineTemplate {...commonProps} />;
       case 'ocean': return <OceanTemplate {...commonProps} />;
-      case 'prism': return <PrismTemplate {...commonProps} />;
+      case 'abstract': return <AbstractTemplate {...commonProps} />;
       default: return <VanguardTemplate {...commonProps} />;
     }
   };
@@ -902,91 +902,86 @@ const OceanTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, 
   );
 };
 
-/* ── 15. PRISM PRO (Diagonal & Structured) ── */
-const PrismTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, fontFamily }) => {
-  const navy = "#1a1e2b";
-  const grey = "#b8b5ad";
-  const textWhite = "#f8f8f8";
+/* ── 15. ABSTRACT PRO (Corporate Deep Blue Style) ── */
+const AbstractTemplate = ({ name, title, formData, logoUrl, initials, smartLayout, fontFamily }) => {
+  const navy = "#0f172a";
+  const blue600 = "#2563eb";
+  const blue800 = "#1e40af";
 
   const contactItems = [
-    { label: 'Phone', icon: Phone, text: formData.phone || "+123-456-7890" },
-    { label: 'Address', icon: MapPin, text: formData.location || "123 Anywhere ST., Any City" },
-    { label: 'Email', icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
+    { icon: Phone, text: formData.phone || "+123-456-7890" },
+    { icon: Mail, text: formData.email || "hello@reallygreatsite.com" },
+    { icon: Globe, text: formData.website || "www.reallygreatsite.com", href: formData.website },
+    { icon: MapPin, text: formData.location || "123 Anywhere St., Any City, ST 12345" },
   ].filter(item => item.text);
 
   return (
-    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex bg-[#1a1e2b]">
+    <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex" style={{ backgroundColor: navy }}>
       
-      {/* Upper Left Textured Section */}
-      <div className="absolute top-0 left-0 w-[60%] h-[70%] z-0" style={{ 
-        clipPath: 'polygon(0 0, 100% 0, 0 100%)',
-        backgroundColor: grey,
-        backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 2px)'
-      }} />
+      {/* Background Abstract Shapes */}
+      <div className="absolute inset-0 z-0">
+         <svg className="w-full h-full" viewBox="0 0 540 300" preserveAspectRatio="none">
+            <defs>
+               <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{ stopColor: blue800, stopOpacity: 0.8 }} />
+                  <stop offset="100%" style={{ stopColor: blue600, stopOpacity: 0.4 }} />
+               </linearGradient>
+               <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style={{ stopColor: blue600, stopOpacity: 0.6 }} />
+                  <stop offset="100%" style={{ stopColor: navy, stopOpacity: 0 }} />
+               </linearGradient>
+            </defs>
+            <circle cx="500" cy="150" r="220" fill="url(#grad1)" />
+            <circle cx="460" cy="180" r="180" fill="url(#grad2)" />
+            <path d="M 350 0 Q 500 150 350 300 L 540 300 L 540 0 Z" fill={navy} opacity="0.3" />
+         </svg>
+      </div>
 
-      {/* Main Content Container */}
-      <div className="relative z-10 w-full h-full flex flex-col justify-between p-10">
-        
-        {/* Top Section: Name and Divider */}
-        <div className="flex flex-col items-end w-full">
-           <div className="text-right">
-              <SmartTextField 
-                text={name || "Juliana Silva"} 
-                maxWidth={320} 
-                defaultFontSize={34} 
-                className="font-medium tracking-wide text-white"
-                style={{ fontFamily: fontFamily || "'Outfit', sans-serif" }}
-              />
-              <div className="h-[1px] w-48 mt-1 ml-auto" style={{ backgroundColor: grey, opacity: 0.8 }} />
-           </div>
-        </div>
+      <div className="relative z-10 w-full h-full flex flex-col justify-between p-12 py-14">
+         
+         {/* Top Section: Identity */}
+         <div className="space-y-1">
+            <SmartTextField 
+              text={name || "ALFREDO TORRES"} 
+              maxWidth={350} 
+              defaultFontSize={34} 
+              className="font-black tracking-tight text-white uppercase leading-none"
+              style={{ fontFamily: fontFamily || "'Inter', sans-serif" }}
+            />
+            <SmartTextField 
+              text={title || "General Manager"} 
+              maxWidth={350} 
+              defaultFontSize={18} 
+              className="font-medium text-white/80"
+              style={{ fontFamily: fontFamily || "'Inter', sans-serif" }}
+            />
+         </div>
 
-        {/* Middle Section: Logo (Bottom Left) and Contacts (Bottom Right) */}
-        <div className="flex items-end justify-between w-full h-full mt-auto">
-           
-           {/* Logo and Company Name */}
-           <div className="flex flex-col items-center gap-3">
-              <div className="w-24 h-24 flex items-center justify-center relative shadow-2xl">
-                 {/* Hexagon style decorative border for logo area */}
-                 <div className="absolute inset-0 rotate-45 border border-white/10" />
-                 {logoUrl ? <img src={logoUrl} className="w-20 h-20 object-contain relative z-10" /> : 
-                    <div className="relative z-10">
-                       <span className="text-4xl font-black text-white opacity-90">{initials}</span>
-                    </div>
-                 }
-              </div>
-              <SmartTextField 
-                text={formData.company || "SALFORD & CO"} 
-                maxWidth={180} 
-                defaultFontSize={14} 
-                className="font-black tracking-[0.2em] text-white/90 uppercase"
-                style={{ textAlign: 'center' }}
-              />
-           </div>
+         {/* Bottom Section: Contacts */}
+         <div className="flex flex-col gap-3">
+            {contactItems.map((item, idx) => (
+               <div key={idx} className="flex items-center gap-4">
+                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
+                     <item.icon size={16} strokeWidth={2.5} style={{ color: navy }} />
+                  </div>
+                  <SmartTextField 
+                    text={item.text} 
+                    maxWidth={300} 
+                    defaultFontSize={13} 
+                    className="font-semibold tracking-wide text-white/90"
+                    style={{ fontFamily: fontFamily || "'Inter', sans-serif" }}
+                    href={item.href}
+                  />
+               </div>
+            ))}
+         </div>
 
-           {/* Contact Details (Right Aligned) */}
-           <div className="flex flex-col gap-5 text-right items-end mr-4 mb-2">
-              {contactItems.map((item, idx) => (
-                <div key={idx} className="flex gap-4 items-center">
-                   <div className="flex flex-col items-end gap-0.5">
-                      <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400 opacity-80">{item.label}</span>
-                      <SmartTextField 
-                        text={item.text} 
-                        maxWidth={200} 
-                        defaultFontSize={11} 
-                        className="text-white font-medium tracking-wide"
-                        href={item.icon === Globe ? item.text : null}
-                      />
-                   </div>
-                   <div className="shrink-0">
-                      <item.icon size={16} strokeWidth={2} className="text-white opacity-90" />
-                   </div>
-                </div>
-              ))}
-           </div>
-
-        </div>
-
+         {/* Optional Logo overlay (if user adds a logo) */}
+         {logoUrl && (
+            <div className="absolute top-10 right-10 w-24 h-24 flex items-center justify-center opacity-80 mix-blend-screen">
+               <img src={logoUrl} className="w-full h-full object-contain" />
+            </div>
+         )}
       </div>
 
     </div>
