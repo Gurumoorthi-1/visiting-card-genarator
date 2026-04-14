@@ -153,6 +153,7 @@ export const TEMPLATES = {
   golden: { name: 'Golden Smart', id: 'golden' },
   vanguard: { name: ' Vanguard Pro', id: 'vanguard' },
   wave: { name: 'Wave Pro', id: 'wave' },
+  edge: { name: 'Edge Clean', id: 'edge'},
 };
 
 function App() {

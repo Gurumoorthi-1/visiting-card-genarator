@@ -75,6 +75,7 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
       case 'golden': return <GoldenTemplate {...commonProps} />;
       case 'vanguard': return <VanguardTemplate {...commonProps} />;
       case 'wave': return <WaveTemplate {...commonProps} />;
+      case 'edge': return <EdgeTemplate {...commonProps} />;
       case 'modern':
       default: return <ModernTemplate {...commonProps} />;
     }
@@ -691,5 +692,82 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
   );
 };
 
+/* ── 11. EDGE CLEAN (Based on requested image) ── */
+const EdgeTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, textSecondary, accentColor, bgPrimary, smartLayout }) => (
+  <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex flex-col bg-white" style={{ background: bgPrimary }}>
+    {/* Left blue strip */}
+    <div className="absolute left-0 top-0 bottom-0 w-[6px]" style={{ background: accentColor }} />
+    
+    {/* Top Section */}
+    <div className="flex-1 flex px-10 pt-8 pb-4">
+      {/* Left Side: Name and Contacts */}
+      <div className="flex-1 flex flex-col justify-between pl-4">
+        {/* Name & Title */}
+        <div className="space-y-1">
+          <SmartTextField text={name || 'MARK SMITH'} maxWidth={220} defaultFontSize={24} maxLines={1} className={`font-black tracking-widest uppercase ${smartLayout.nameTracking}`} style={{ color: textPrimary }} />
+          <SmartTextField text={title || 'Co-Founder Name'} maxWidth={220} defaultFontSize={11} maxLines={1} className="font-medium tracking-wide uppercase opacity-70" style={{ color: textSecondary }} />
+        </div>
+
+        {/* Contacts */}
+        <div className="space-y-3 mt-4 mb-2">
+          {[ 
+            { flag: formData.phone, icon: Phone, text: formData.phone }, 
+            { flag: formData.email, icon: Mail, text: formData.email }, 
+            { flag: formData.website, icon: Globe, text: formData.website }
+          ].map((item, idx) => item.flag && (
+            <div key={idx} className="flex items-center gap-3">
+              <div className="w-[18px] h-[18px] flex justify-center items-center rounded-sm shrink-0" style={{ background: accentColor }}>
+                <item.icon className="w-2.5 h-2.5 text-white" strokeWidth={2.5} />
+              </div>
+              <SmartTextField text={item.text} maxWidth={200} defaultFontSize={10} className="font-semibold tracking-wide" style={{ color: textSecondary }} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Right Side: Logo & Company */}
+      <div className="flex-1 flex flex-col items-center justify-center pt-2 px-4 relative">
+         {/* Subtle pattern or shape behind logo (optional, keeping it clean like image) */}
+         <div className={`w-28 h-28 flex items-center justify-center mb-3 transition-transform duration-500 flex-shrink-0 ${smartLayout.logoScaleClass}`}>
+            {logoUrl ? <img src={logoUrl} alt="Logo" className="max-w-[110px] max-h-[110px] object-contain drop-shadow-sm" /> : 
+                       (
+                         <div className="relative w-16 h-16 flex items-center justify-center border-4 rounded-[6px] rotate-45 shrink-0" style={{ borderColor: accentColor }}>
+                           <div className="w-4 h-4 rotate-45 rounded-[2px]" style={{ background: accentColor }} />
+                         </div>
+                       )}
+         </div>
+         <div className="text-center w-full mt-2 space-y-1">
+           <SmartTextField text={formData.company || 'DESIGN'} maxWidth={180} defaultFontSize={22} minFontSize={14} maxLines={2} className="font-black tracking-widest uppercase text-center leading-none" style={{ color: textPrimary }} />
+           {formData.tagline && <SmartTextField text={formData.tagline} maxWidth={160} defaultFontSize={9} className="font-bold tracking-widest uppercase text-center opacity-50 block mx-auto" style={{ color: textSecondary }} />}
+         </div>
+      </div>
+    </div>
+
+    {/* Bottom Bar Segment */}
+    <div className="h-[42px] w-full relative flex shrink-0 overflow-hidden ml-[6px]">
+       {/* Right part background */}
+       <div className="absolute inset-0 z-0" style={{ background: accentColor, opacity: 0.85 }} /> 
+       
+       {/* Left part background with slant cut */}
+       <div className="absolute top-0 bottom-0 left-0 z-10 origin-left" style={{ width: '65%', background: accentColor, clipPath: 'polygon(0 0, 95% 0, 100% 100%, 0 100%)' }} />
+
+       <div className="relative z-20 w-full h-full flex items-center">
+           <div className="w-[65%] pl-10 pr-6 flex items-center gap-2 h-full">
+              {formData.location && (
+                 <>
+                   <div className="w-5 h-5 flex items-center justify-center rounded-[4px] bg-white/20 shrink-0">
+                      <MapPin className="w-3 h-3 text-white" strokeWidth={2.5} />
+                   </div>
+                   <SmartTextField text={formData.location} maxWidth={200} defaultFontSize={10} className="font-medium tracking-wide text-white truncate" />
+                 </>
+              )}
+           </div>
+           <div className="flex-1 flex items-center justify-center pl-6 pr-4 h-full">
+              <SmartTextField text={formData.tagline ? formData.tagline : (formData.title || 'Graphic Design')} maxWidth={150} defaultFontSize={10} className="font-bold tracking-widest uppercase text-white truncate" />
+           </div>
+       </div>
+    </div>
+  </div>
+);
 
 export default BusinessCard;
