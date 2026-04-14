@@ -21,7 +21,8 @@ const TEMPLATE_OPTIONS = [
   { id: 'wave', name: 'Wave Pro Template' },
   { id: 'elegant', name: 'Elegant Pro Template' },
   { id: 'studio', name: 'Studio Pro Template' },
-  { id: 'skyline', name: 'Skyline Pro Template' }
+  { id: 'skyline', name: 'Skyline Pro Template' },
+  { id: 'crystal', name: 'Crystal Pro Template' }
 ];
 
 const REQUIRED_FIELDS = [

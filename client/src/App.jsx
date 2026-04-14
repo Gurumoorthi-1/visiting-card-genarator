@@ -163,6 +163,7 @@ export const TEMPLATES = {
   elegant: { name: 'Elegant Pro', id: 'elegant' },
   studio: { name: 'Studio Pro', id: 'studio' },
   skyline: { name: 'Skyline Pro', id: 'skyline' },
+  crystal: { name: 'Crystal Pro', id: 'crystal' },
 };
 
 function App() {
