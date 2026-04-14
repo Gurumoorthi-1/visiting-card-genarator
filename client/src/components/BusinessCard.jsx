@@ -694,72 +694,70 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
 
 /* ── 11. EDGE CLEAN (Based on requested image) ── */
 const EdgeTemplate = ({ name, title, formData, logoUrl, initials, smartLayout }) => (
-  <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex flex-col bg-white">
-    {/* Left blue strip */}
-    <div className="absolute left-0 top-0 bottom-0 w-[8px]" style={{ background: '#1c5ee8' }} />
-    
-    {/* Top Section */}
-    <div className="flex-1 flex px-10 pt-8 pb-4">
-      {/* Left Side: Name and Contacts */}
-      <div className="flex-1 flex flex-col justify-between pl-4">
-        {/* Name & Title */}
-        <div className="space-y-1">
-          <SmartTextField text={name || 'MARK SMITH'} maxWidth={220} defaultFontSize={24} maxLines={1} className={`font-black tracking-widest uppercase ${smartLayout.nameTracking}`} style={{ color: '#2b3034' }} />
-          <SmartTextField text={title || 'Co-Founder Name'} maxWidth={220} defaultFontSize={11} maxLines={1} className="font-semibold tracking-wider uppercase" style={{ color: '#8a959d' }} />
-        </div>
-
-        {/* Contacts */}
-        <div className="space-y-3 mt-4 mb-2">
-          {[ 
-            { flag: formData.phone || true, icon: Phone, text: formData.phone || '000 123 456 789' }, 
-            { flag: formData.email || true, icon: Mail, text: formData.email || 'www.urname@gmail.com' }, 
-            { flag: formData.website || true, icon: Globe, text: formData.website || 'www.urname@gmail.com' }
-          ].map((item, idx) => item.flag && (
-            <div key={idx} className="flex items-center gap-3">
-              <div className="w-[20px] h-[20px] flex justify-center items-center rounded-sm shrink-0 shadow-sm" style={{ background: '#1c5ee8' }}>
-                <item.icon className="w-3 h-3 text-white" strokeWidth={2.5} />
-              </div>
-              <SmartTextField text={item.text} maxWidth={200} defaultFontSize={10} className="font-semibold tracking-wide" style={{ color: '#8a959d' }} />
+  <div className="absolute inset-0 z-10 w-full h-full overflow-hidden flex flex-col bg-white font-sans">
+    {/* Content Area with Top & Side Padding */}
+    <div className="flex-1 flex px-8 pt-8 pb-4 relative">
+       {/* Primary Blue left border line */}
+       <div className="absolute left-0 top-0 bottom-0 w-[8px]" style={{ background: '#0047AB' }} />
+       
+       <div className="w-full h-full flex pl-4">
+         {/* LEFT COLUMN */}
+         <div className="w-[55%] flex flex-col justify-between pr-6 border-r" style={{ borderColor: 'rgba(0, 71, 171, 0.15)' }}>
+            {/* Top Row Left */}
+            <div className="space-y-1 mt-1">
+              <SmartTextField text={name || 'MARK SMITH'} maxWidth={220} defaultFontSize={24} maxLines={1} className={`font-black tracking-widest uppercase text-slate-800 ${smartLayout.nameTracking}`} />
+              <SmartTextField text={title || 'Co-Founder Name'} maxWidth={220} defaultFontSize={11} maxLines={1} className="font-semibold tracking-wider uppercase text-slate-500" />
             </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Right Side: Logo & Company */}
-      <div className="flex-1 flex flex-col items-center justify-center pt-2 px-4 relative">
-         <div className={`w-28 h-28 flex items-center justify-center mb-1 transition-transform duration-500 flex-shrink-0 ${smartLayout.logoScaleClass}`}>
-            {logoUrl ? <img src={logoUrl} alt="Logo" className="max-w-[110px] max-h-[110px] object-contain drop-shadow-sm" /> : 
-                       (
-                         <div className="relative w-16 h-16 flex items-center justify-center border-4 rounded-[6px] rotate-45 shrink-0 shadow-sm" style={{ borderColor: '#1c5ee8' }}>
-                           <div className="w-5 h-5 rotate-45 rounded-[2px]" style={{ background: '#70addf' }} />
-                         </div>
-                       )}
+            {/* Middle Section (Contact List) - Stacked Four Lines */}
+            <div className="space-y-2.5 mb-2">
+              {[ 
+                { flag: formData.phone || true, icon: Phone, text: formData.phone || '000 123 456 789' }, 
+                { flag: formData.phone || true, icon: Phone, text: formData.phone || '000 123 456 789' }, 
+                { flag: formData.email || true, icon: Mail, text: formData.email || 'address@gmail.com' }, 
+                { flag: formData.website || true, icon: Globe, text: formData.website || 'address@gmail.com' }
+              ].map((item, idx) => item.flag && (
+                <div key={idx} className="flex items-center gap-3">
+                  <div className="w-5 h-5 flex justify-center items-center rounded-sm shrink-0" style={{ background: '#0047AB' }}>
+                    <item.icon className="w-3 h-3 text-white" strokeWidth={2.5} />
+                  </div>
+                  <SmartTextField text={item.text} maxWidth={200} defaultFontSize={10} className="font-bold tracking-wide text-slate-500" />
+                </div>
+              ))}
+            </div>
          </div>
-         <div className="text-center w-full mt-2 space-y-1">
-           <SmartTextField text={formData.company || 'DESIGN'} maxWidth={180} defaultFontSize={24} minFontSize={14} maxLines={2} className="font-black tracking-[0.2em] uppercase text-center leading-none" style={{ color: '#2b3034' }} />
-           <SmartTextField text={formData.tagline || 'TAGLINE AREA'} maxWidth={160} defaultFontSize={9} className="font-bold tracking-[0.3em] uppercase text-center block mx-auto mt-2" style={{ color: '#8a959d' }} />
+
+         {/* RIGHT COLUMN */}
+         <div className="flex-1 flex flex-col items-end justify-start pl-6 pt-3">
+            <div className={`w-24 h-24 flex items-center justify-end mb-4 flex-shrink-0 ${smartLayout.logoScaleClass}`}>
+                {logoUrl ? <img src={logoUrl} alt="Logo" className="max-w-full max-h-full object-contain drop-shadow-sm" /> : 
+                           (
+                             <div className="relative w-[54px] h-[54px] flex items-center justify-center border-[4px] rounded-[3px] rotate-45 shrink-0 mr-4" style={{ borderColor: '#0047AB' }}>
+                               <div className="w-[14px] h-[14px] rotate-45 rounded-[2px]" style={{ background: '#00FFFF' }} />
+                               <div className="absolute inset-0 border-2 scale-[0.6] rotate-45 rounded-sm" style={{ borderColor: 'rgba(0, 71, 171, 0.3)' }} />
+                             </div>
+                           )}
+             </div>
+             <div className="text-right w-full space-y-1.5 mt-2">
+               <SmartTextField text={formData.company || 'DESIGN'} maxWidth={180} defaultFontSize={24} minFontSize={14} maxLines={1} className="font-black tracking-[0.2em] uppercase text-right text-slate-800 leading-none" />
+               <SmartTextField text={formData.tagline || 'TAGLINE HERE'} maxWidth={180} defaultFontSize={9} className="font-bold tracking-[0.3em] uppercase text-right text-slate-400 block ml-auto" />
+             </div>
          </div>
-      </div>
+       </div>
     </div>
 
-    {/* Bottom Bar Segment */}
-    <div className="h-[46px] w-full relative flex shrink-0 overflow-hidden ml-[8px]">
-       {/* Right part background */}
-       <div className="absolute inset-0 z-0" style={{ background: '#0eb1eb' }} /> 
-       
-       {/* Left part background with slant cut - we use a wider polygon to make the slant match */}
-       <div className="absolute top-0 bottom-0 left-0 z-10 origin-left" style={{ width: '60%', background: '#1154c8', clipPath: 'polygon(0 0, 92% 0, 100% 100%, 0 100%)' }} />
-
-       <div className="relative z-20 w-full h-full flex items-center">
-           <div className="w-[60%] pl-10 pr-10 flex items-center gap-3 h-full">
-              <div className="w-[22px] h-[22px] flex items-center justify-center rounded-[3px] shrink-0" style={{ background: '#ffffff' }}>
-                 <MapPin className="w-3.5 h-3.5" strokeWidth={2.5} style={{ color: '#1154c8' }} />
-              </div>
-              <SmartTextField text={formData.location || 'Your location here'} maxWidth={180} defaultFontSize={10} className="font-semibold tracking-wide text-white truncate" />
-           </div>
-           <div className="flex-1 flex items-center justify-center pr-10 pl-2 h-full">
-              <SmartTextField text={formData.title || 'Graphic Design'} maxWidth={150} defaultFontSize={10} className="font-semibold tracking-widest uppercase text-white truncate drop-shadow-sm" />
-           </div>
+    {/* Bottom Footer (Dynamic Blue Gradient) */}
+    <div className="h-[48px] w-full flex items-center px-8 shrink-0 relative shadow-md" style={{ background: 'linear-gradient(90deg, #00FFFF 0%, #0047AB 100%)' }}>
+       {/* Inside Footer (Left) */}
+       <div className="flex items-center gap-3 w-[60%] h-full">
+          <div className="w-[22px] h-[22px] flex items-center justify-center rounded-[3px] shrink-0 bg-white shadow-sm">
+             <MapPin className="w-3.5 h-3.5" strokeWidth={2.5} style={{ color: '#0047AB' }} />
+          </div>
+          <SmartTextField text={formData.location || 'Your Address Here'} maxWidth={220} defaultFontSize={11} className="font-bold tracking-wide text-white truncate" />
+       </div>
+       {/* Inside Footer (Right) */}
+       <div className="flex-1 flex items-center justify-end h-full">
+          <SmartTextField text={formData.title || 'Graphic Design'} maxWidth={160} defaultFontSize={11} className="font-bold tracking-widest uppercase text-white truncate text-right drop-shadow-md" />
        </div>
     </div>
   </div>
