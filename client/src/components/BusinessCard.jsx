@@ -556,11 +556,11 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
   const darkDiamond = "#1d2d50";
   const lightDiamond = "#1a80b6";
 
-  const D = ({ cx, cy, type, r = 68 }) => {
+  const D = ({ cx, cy, type, r = 48 }) => {
     const pts = `${cx},${cy - r} ${cx + r},${cy} ${cx},${cy + r} ${cx - r},${cy}`;
     if (type === 'dark') return <polygon points={pts} fill={darkDiamond} />;
     if (type === 'light') return <polygon points={pts} fill={lightDiamond} />;
-    if (type === 'outline') return <polygon points={pts} fill="none" stroke={outline} strokeWidth="3" opacity="0.8" />;
+    if (type === 'outline') return <polygon points={pts} fill="none" stroke={outline} strokeWidth="2.5" opacity="0.8" />;
     return null;
   };
 
@@ -578,36 +578,71 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
       <div className="absolute inset-0 pointer-events-none opacity-[0.04] z-[5]" 
            style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.95\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
 
-      {/* Geometric Right Pattern */}
+      {/* Geometric Right Pattern (Smaller scale r=48) */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 540 300">
          <g>
            {/* FILLS */}
-           <D cx={438} cy={82} type="light" />
-           <D cx={438} cy={218} type="light" />
-           <D cx={506} cy={14} type="dark" />
-           <D cx={506} cy={286} type="dark" />
-           <D cx={574} cy={82} type="dark" />
-           <D cx={574} cy={218} type="light" />
-           <D cx={642} cy={150} type="dark" />
-
-           <D cx={370} cy={-20} type="dark" />
-           <D cx={370} cy={320} type="dark" />
+           {/* Col 2 */}
+           <D cx={405} cy={105} type="light" />
+           <D cx={405} cy={195} type="light" />
            
+           {/* Col 3 */}
+           <D cx={450} cy={60} type="dark" />
+           <D cx={450} cy={240} type="dark" />
+           
+           {/* Col 4 */}
+           <D cx={495} cy={15} type="light" />
+           <D cx={495} cy={105} type="dark" />
+           <D cx={495} cy={195} type="light" />
+           <D cx={495} cy={285} type="dark" />
+
+           {/* Col 5 */}
+           <D cx={540} cy={-30} type="dark" />
+           <D cx={540} cy={60} type="light" />
+           <D cx={540} cy={150} type="dark" />
+           <D cx={540} cy={240} type="light" />
+           <D cx={540} cy={330} type="dark" />
+
+           {/* Col 6 */}
+           <D cx={585} cy={15} type="dark" />
+           <D cx={585} cy={105} type="light" />
+           <D cx={585} cy={195} type="dark" />
+           <D cx={585} cy={285} type="light" />
+
            {/* OUTLINES */}
-           <D cx={370} cy={150} type="outline" />
-           <D cx={506} cy={150} type="outline" />
-           <D cx={574} cy={354} type="outline" />
+           <D cx={360} cy={150} type="outline" />
+           <D cx={450} cy={150} type="outline" />
+           <D cx={495} cy={285} type="outline" />
+           <D cx={540} cy={60} type="outline" />
          </g>
       </svg>
 
       {/* Content */}
-      <div className="relative z-10 w-[65%] h-full flex flex-col justify-center px-12 py-8">
-         <div className="mb-6 mt-2 relative">
-            {logoUrl && (
-              <div className="w-12 h-12 mb-3">
-                 <img src={logoUrl} className="w-full h-full object-contain drop-shadow-sm" />
+      <div className="relative z-10 w-[70%] h-full flex flex-col justify-center px-10 py-8">
+         <div className="mb-5 mt-2 relative">
+            
+            {/* Company Info row */}
+            {(logoUrl || formData.company) && (
+              <div className="flex items-center gap-3 mb-3">
+                {logoUrl && (
+                  <div className="w-10 h-10 shrink-0">
+                     <img src={logoUrl} className="w-full h-full object-contain drop-shadow-sm" />
+                  </div>
+                )}
+                {formData.company && (
+                  <SmartTextField 
+                    text={formData.company} 
+                    maxWidth={180} 
+                    defaultFontSize={14} 
+                    minFontSize={8}
+                    maxLines={2}
+                    className="font-black tracking-widest uppercase"
+                    style={{ color: textDark, fontFamily: "'Inter', sans-serif" }}
+                  />
+                )}
               </div>
             )}
+
             <SmartTextField 
               text={name || "Cahaya Dewi"} 
               maxWidth={300} 
@@ -622,7 +657,7 @@ const VanguardTemplate = ({ name, title, formData, logoUrl, initials, smartLayou
               maxWidth={300} 
               defaultFontSize={14} 
               minFontSize={8}
-              className="font-bold tracking-widest uppercase mt-1"
+              className="font-bold tracking-widest uppercase mt-0.5"
               style={{ color: textDark, opacity: 0.9, fontFamily: "'Inter', sans-serif" }}
             />
          </div>
