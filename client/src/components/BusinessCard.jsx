@@ -135,15 +135,15 @@ const BusinessCard = ({ formData, logoUrl, designParams, isFlipped, isBatchExpor
           
           {/* Inject QR Code firmly on the Front Face Bottom Right only during Batch Export */}
           {isBatchExport && (
-            <div className="absolute bottom-5 right-5 p-1.5 bg-white rounded-[8px] shadow-lg border border-slate-100 z-50 flex flex-col items-center gap-1">
+            <div className="absolute bottom-3 right-3 p-1 bg-white rounded-[6px] shadow-lg border border-slate-100 z-50 flex flex-col items-center gap-0.5">
               <QRCodeSVG 
                 value={vCardData || "No Data"} 
-                size={46} 
+                size={42} 
                 bgColor={"#ffffff"} 
                 fgColor={qrFgColor}
                 level={"H"}
               />
-              <span className="text-[5px] font-black uppercase tracking-widest text-slate-400">Scan</span>
+              <span className="text-[4px] font-black uppercase tracking-widest text-slate-400">Scan</span>
             </div>
           )}
         </div>
@@ -783,14 +783,14 @@ const WaveTemplate = ({ name, title, formData, logoUrl, initials, textPrimary, t
           </div>
         </div>
 
-        {/* RIGHT SECTION (White Area - Adjusted for Batch QR safety) */}
-        <div className="w-[48%] flex flex-col items-center justify-start pt-14 pl-16 text-center relative transition-all duration-300">
-          {/* Logo & Company */}
-          <div className="flex flex-col items-center gap-1.5 mb-2 mr-0">
-             <div className="w-32 h-32 flex items-center justify-center mb-0 drop-shadow-xl">
+        {/* RIGHT SECTION (White Area - Repositioned Top-Center) */}
+        <div className="w-[48%] flex flex-col items-center justify-start pt-10 pl-16 text-center relative transition-all duration-300">
+          {/* Logo & Company - Tightly Coupled */}
+          <div className="flex flex-col items-center gap-1 mb-2 mr-0">
+             <div className="w-40 h-40 flex items-center justify-center mb-0 drop-shadow-xl">
                 {logoUrl ? <img src={logoUrl} alt="Logo" className="w-full h-full object-contain animate-fade-in" style={{ imageRendering: 'high-quality' }} /> 
                          : (
-                            <div className="relative w-28 h-28 flex items-center justify-center bg-white shadow-2xl rounded-full border border-slate-100 p-5">
+                            <div className="relative w-32 h-32 flex items-center justify-center bg-white shadow-2xl rounded-full border border-slate-100 p-5">
                                <svg viewBox="0 0 100 100" className="w-full h-full">
                                   <polygon points="50 1, 93 25, 93 75, 50 99, 7 75, 7 25" fill="none" stroke={waveMainBlue} strokeWidth="8" />
                                   <polygon points="50 15, 80 33, 80 67, 50 85, 20 67, 20 33" fill={waveLightBlue} />
